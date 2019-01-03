@@ -7,7 +7,9 @@
     "test": "export NODE_ENV=test&& mocha --reporter progress --require babel-register --require babel-polyfill --exit \"tests/index.js\"",
     "start": "babel-node server.js",
     "lint": "node_modules/.bin/esw webpack.config.* src",
-    "lint:watch": "npm run lint -- --watch"
+    "lint:watch": "npm run lint -- --watch",
+    "test-coverage": "export NODE_ENV=test&& babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter progress --require babel-register --require babel-polyfill --exit tests/index.js",
+    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "react",
@@ -33,6 +35,7 @@
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-istanbul": "^0.12.2",
     "babel-loader": "7.1.5",
     "babel-plugin-react-display-name": "2.0.0",
     "babel-polyfill": "6.26.0",
@@ -42,6 +45,7 @@
     "babel-register": "6.26.0",
     "cheerio": "0.22.0",
     "compression": "1.6.1",
+    "coveralls": "^3.0.2",
     "css-loader": "0.23.1",
     "dot-env": "0.0.1",
     "enzyme": "2.2.0",
