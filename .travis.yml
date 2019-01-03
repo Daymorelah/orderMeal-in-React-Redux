@@ -1,0 +1,13 @@
+language: node,
+sudo: required
+language: node_js
+node_js:
+  - "6"
+env: 
+  global:
+    - NODE_ENV=test
+branches:
+  except:
+  - gh-pages
+script:
+  - npm test
