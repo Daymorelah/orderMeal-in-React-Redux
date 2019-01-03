@@ -6,7 +6,8 @@ Front-end version for a food delivery service app for a restaurant in React/Redu
 The front-end was implemented using:
 * [HTML](https://www.w3schools.com/Html/) A standard markup language for creating Web pages
 * [CSS](https://www.w3schools.com/css/css_intro.asp) This describes how HTML elements are to be displayed on screen.
-* [Vanilla JavasScript](https://www.w3schools.com/js/default.asp) A programming language of HTML and the Web.
+* [React](https://reactjs.org/) A JavaScript library for building user interfaces.
+* [Redux](https://redux.js.org/) A predictable state container for JavaScript apps.
 
 ### Author
 * Ademola Hussain
