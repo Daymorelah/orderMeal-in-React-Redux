@@ -13,4 +13,4 @@ The front-end was implemented using:
 * Ademola Hussain
 
 ### Licence
-[MIT License](https://github.com/Daymorelah/orderMeal-in-React-Redux/blob/development/LICENSE)
+[MIT License](https://github.com/Daymorelah/orderMeal-in-React-Redux/blob/master/LICENSE)
