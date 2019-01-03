@@ -64,3 +64,8 @@ typings/
 
 # next.js build output
 .next
+
+# Compiled ES6 code to ES5. Done on heroku
+build/**/**
+.DS_Store
+src/.DS_Store
