@@ -4,6 +4,8 @@
   "description": "front-end implementation of the order-meal app using React/Redux.",
   "main": "index.js",
   "scripts": {
+    "prebuild":"babel server.js webpack.config.dev.js --out-dir build && babel src --out-dir build/src",
+    "build":"npm run prebuild && node build/server.js",
     "test": "export NODE_ENV=test&& mocha --reporter progress --require babel-register --require babel-polyfill --exit \"tests/index.js\"",
     "start": "babel-node server.js",
     "lint": "node_modules/.bin/esw webpack.config.* src",
@@ -31,7 +33,8 @@
     "react-router-dom": "4.3.1",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
-    "toastr": "2.1.2"
+    "toastr": "2.1.2",
+    "babel-cli":"6.26.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
