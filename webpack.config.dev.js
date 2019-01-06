@@ -7,7 +7,7 @@ export default {
   entry: [
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
-    path.resolve(__dirname, 'src/app.js')
+    path.resolve(__dirname, 'src/app.jsx')
   ],
   target: 'web',
   output: {
@@ -27,7 +27,7 @@ export default {
   ],
   module: {
     rules: [
-      {test: /\.js$/, include: path.join(__dirname, 'src'), exclude: /node_modules/, use: "babel-loader"},
+      {test: /\.(js|jsx)?/, include: path.join(__dirname, 'src'), exclude: /node_modules/, use: "babel-loader"},
       {test: /(\.css)$/, use: [
         { loader: 'style-loader' },
         { loader: 'css-loader' }
