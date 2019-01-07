@@ -1,5 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import configuredReduxStore from '../store';
 
 const MainApp = () => {
   return (
@@ -9,4 +11,11 @@ const MainApp = () => {
   );
 };
 
-render(<MainApp />, document.getElementById('app'));
+const configuredStore = configuredReduxStore();
+
+render(
+  <Provider store={configuredStore} >
+    <MainApp />
+  </Provider>,
+  document.getElementById('app')
+);
