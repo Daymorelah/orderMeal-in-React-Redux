@@ -1,21 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import configuredReduxStore from '../store';
-
-const MainApp = () => {
-  return (
-    <div>
-      <h1>Welcome to the Authors Haven App</h1>
-    </div>
-  );
-};
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './Components/app.jsx';
+import configuredReduxStore from './store';
 
 const configuredStore = configuredReduxStore();
 
 render(
   <Provider store={configuredStore} >
-    <MainApp />
+    <Router basename="/client">
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('app')
 );

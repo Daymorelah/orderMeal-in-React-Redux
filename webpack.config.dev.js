@@ -7,7 +7,7 @@ export default {
   entry: [
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
-    path.resolve(__dirname, 'src/app.jsx')
+    path.resolve(__dirname, 'src/index.jsx')
   ],
   target: 'web',
   output: {
@@ -16,8 +16,8 @@ export default {
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'src'),
-    noInfo: true,
+    contentBase: path.resolve(__dirname, 'src/index.jsx'),
+    noInfo: false,
     debug: true,
     hot: true
   },
@@ -27,7 +27,11 @@ export default {
   ],
   module: {
     rules: [
-      {test: /\.(js|jsx)?/, include: path.join(__dirname, 'src'), exclude: /node_modules/, use: "babel-loader"},
+      {test: /\.(js|jsx)?/,
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
+        use: "babel-loader"
+      },
       {test: /(\.css)$/, use: [
         { loader: 'style-loader' },
         { loader: 'css-loader' }
@@ -37,5 +41,8 @@ export default {
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: 'url?limit=10000&mimetype=application/octet-stream'},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: 'url?limit=10000&mimetype=image/svg+xml'}
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json']
   }
 };
