@@ -4,8 +4,6 @@ import AboutPage from '../Components/about.jsx';
 import HomePage from '../Components/home.jsx';
 
 const App = (props) => {
-  console.log('children is ==> ', props.children);
-  console.log('props is ==> ', props);
   return(
     <div>
       <h1>Header here</h1>
