@@ -17,7 +17,7 @@ export default {
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'src/index.jsx'),
-    noInfo: false,
+    noInfo: true,
     debug: true,
     hot: true
   },

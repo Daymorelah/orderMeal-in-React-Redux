@@ -1,5 +1,7 @@
 import express from 'express';
 import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
 import config from './webpack.config.dev';
 
@@ -9,18 +11,20 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const compiler = webpack(config);
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
+if (process.env.NODE_ENV === 'development') {
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath,
+    hot: true,
+  }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
-app.use(require('webpack-hot-middleware')(compiler));
-
-app.get('*', function(req, res) {
-  if(app.get('env')==='production'){
+app.get('*', (req, res) => {
+  if (app.get('env') === 'production') {
     return res.sendFile(path.resolve(__dirname, '../index.html'));
   }
-  res.sendFile(path.join( __dirname, './index.html'));
+  return res.sendFile(path.join(__dirname, './index.html'));
 });
 
 app.listen(PORT, (err) => {

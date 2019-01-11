@@ -4,8 +4,8 @@
   "description": "front-end implementation of the order-meal app using React/Redux.",
   "main": "index.js",
   "scripts": {
-    "prebuild":"babel server.js webpack.config.dev.js --out-dir build && babel src --out-dir build/src",
-    "build":"npm run prebuild && node build/server.js",
+    "prebuild": "babel server.js webpack.config.dev.js --out-dir build && babel src --out-dir build/src",
+    "build": "npm run prebuild && node build/server.js",
     "test": "export NODE_ENV=test&& mocha --reporter progress --require babel-register --require babel-polyfill --exit \"tests/index.js\"",
     "start": "babel-node server.js",
     "lint": "node_modules/.bin/esw webpack.config.* src",
@@ -23,9 +23,12 @@
     "heroku"
   ],
   "dependencies": {
+    "axios": "0.18.0",
+    "babel-cli": "6.26.0",
     "bootstrap": "3.3.6",
     "express": "4.16.4",
     "jquery": "2.2.3",
+    "prop-types": "^15.6.2",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
@@ -34,10 +37,13 @@
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
     "toastr": "2.1.2",
-    "babel-cli":"6.26.0"
+    "webpack": "4.26.1",
+    "webpack-dev-middleware": "1.6.1",
+    "webpack-hot-middleware": "2.10.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-eslint": "^10.0.1",
     "babel-istanbul": "0.12.2",
     "babel-loader": "7.1.5",
     "babel-plugin-react-display-name": "2.0.0",
@@ -52,10 +58,13 @@
     "css-loader": "0.23.1",
     "dot-env": "0.0.1",
     "enzyme": "2.2.0",
-    "eslint": "2.9.0",
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "2.1.1",
-    "eslint-plugin-import": "1.6.1",
-    "eslint-plugin-react": "5.2.2",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx": "0.0.2",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3",
     "eslint-watch": "2.1.11",
     "eventsource-polyfill": "0.9.6",
     "expect": "1.19.0",
@@ -70,9 +79,7 @@
     "rimraf": "2.5.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "4.26.1",
-    "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
+    "webpack-dev-server": "^3.1.14"
   },
   "author": "Ademola Hussain",
   "license": "MIT"
