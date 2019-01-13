@@ -9,21 +9,47 @@ import * as signupActions from '../../actions/signupActions';
 class Signup extends Component {
   constructor(props) {
     super(props);
-    this.handleOnsubmitUserDetails = this.handleOnsubmitUserDetails.bind(this);
+    this.state = {
+      isTyping: false,
+      buttonStatus: 'Signup',
+    };
+    this.handleOnsubmit = this.handleOnsubmit.bind(this);
+    this.handleOnInputChange = this.handleOnInputChange.bind(this);
   }
 
-  handleOnsubmitUserDetails(userDetails) {
-    const { signupUser } = this.props;
-    signupUser(userDetails);
+  componentDidMount() {
+    const { registeredUser, history } = this.props;
+    if (registeredUser.isAuthenticated || localStorage.getItem('token')) {
+      history.push('/home');
+    }
+  }
+
+  handleOnsubmit(userDetails) {
+    const { signupUser, history } = this.props;
+    this.setState({ isTyping: false, buttonStatus: 'Signing in...' });
+    signupUser(userDetails).then((response) => {
+      if (response === undefined) setTimeout(() => history.push('/home'), 3000);
+    });
+  }
+
+  handleOnInputChange() {
+    this.setState({ isTyping: true, buttonStatus: 'Signup' });
   }
 
   render() {
-    const { registeredUsers } = this.props;
+    const { registeredUser } = this.props;
+    const { isTyping, buttonStatus } = this.state;
     return (
       <div>
         <NavigationBar />
-        <SignupForm submitUserDetails={this.handleOnsubmitUserDetails} />
-        {registeredUsers}
+        <SignupForm
+          submitUserDetails={this.handleOnsubmit}
+          message={registeredUser.message}
+          status={registeredUser.status}
+          checkIfTyping={this.handleOnInputChange}
+          isTyping={isTyping}
+          buttonStatus={buttonStatus}
+        />
         <Footer />
       </div>
     );
@@ -31,12 +57,13 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  registeredUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  registeredUser: PropTypes.arrayOf(PropTypes.object).isRequired,
   signupUser: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => ({
-  registeredUsers: state.users
+  registeredUser: state.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({

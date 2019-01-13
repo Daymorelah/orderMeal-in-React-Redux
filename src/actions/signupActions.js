@@ -1,20 +1,25 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import attachAuthToken from '../utilities/attachAuthToken';
 
 const domain = (process.env.NODE_ENV === 'development')
   ? 'http://localhost:2022' : process.env.PRODUCTION_URL;
 
 export const noInternet = () => ({
   type: actionTypes.NO_INTERNET,
+  message: 'Could not connect to the internet. Please check your connection.'
 });
 export const serverError = () => ({
   type: actionTypes.SERVER_ERROR,
+  message: 'Internal server error. Please try again',
 });
-export const clientError = () => ({
+export const clientError = response => ({
   type: actionTypes.CLIENT_ERROR,
+  message: response.message,
 });
 export const generalError = () => ({
   type: actionTypes.GENERAL_ERROR,
+  message: 'Something awful happened. We will fix this soon.'
 });
 export const signupUserSuccess = userCreated => ({
   type: actionTypes.SIGNUP_USER_SUCCESS,
@@ -25,12 +30,14 @@ export const signupUser = userDetails => dispatch => axios
   .post(`${domain}/api/v1/auth/signup`, userDetails)
   .then((response) => {
     if (response.status === 201) {
-      dispatch(signupUserSuccess(response.data));
+      localStorage.setItem('token', response.data.data.token);
+      attachAuthToken(response.data.data.token);
+      dispatch(signupUserSuccess(response.data.data));
     }
   })
   .catch((error) => {
     if (error.response && error.response.status === 409) {
-      return dispatch(clientError());
+      return dispatch(clientError(error.response.data.data));
     }
     if (error.response && error.response.status > 499) {
       return dispatch(serverError());
