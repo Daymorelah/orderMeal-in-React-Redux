@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import SignupStatus from './signupStatus';
+import SignupButton from './signupButton';
 
-const signupForm = ({ submitUserDetails }) => {
+const signupForm = ({
+  submitUserDetails, message, status, checkIfTyping, isTyping, buttonStatus
+}) => {
   let username, password, email;
   return (
     <main>
@@ -11,11 +15,11 @@ const signupForm = ({ submitUserDetails }) => {
           <div id="header-text">
             <h1>Welcome to the O-meal App.</h1>
           </div>
-          <section id="success-error-response">
-            <div id="response-container">
-              <p>status message</p>
-            </div>
-          </section>
+          <SignupStatus
+            statusMessage={message}
+            status={status}
+            isTyping={isTyping}
+          />
           <div id="signup-form">
             <h2>please signup</h2>
             <form onSubmit={(event) => {
@@ -33,25 +37,26 @@ const signupForm = ({ submitUserDetails }) => {
                 id="username"
                 placeholder="username"
                 ref={(input) => { username = input; }}
+                onChange={checkIfTyping}
+                required
               />
               <input
                 type="password"
                 id="password"
                 placeholder="password"
                 ref={(input) => { password = input; }}
+                onChange={checkIfTyping}
+                required
               />
               <input
                 type="email"
                 id="email"
                 placeholder="email"
                 ref={(input) => { email = input; }}
+                onChange={checkIfTyping}
+                required
               />
-              <button
-                id="signup-button"
-                type="submit"
-              >
-                Signup
-              </button>
+              <SignupButton buttonStatus={buttonStatus} />
               <h3 id="login">
                 Do you have an account?
                 <Link to="login">Login</Link>
@@ -66,5 +71,10 @@ const signupForm = ({ submitUserDetails }) => {
 
 signupForm.propTypes = {
   submitUserDetails: PropTypes.objectOf(PropTypes.string).isRequired,
+  message: PropTypes.string.isRequired,
+  status: PropTypes.bool.isRequired,
+  checkIfTyping: PropTypes.func.isRequired,
+  isTyping: PropTypes.bool.isRequired,
+  buttonStatus: PropTypes.string.isRequired,
 };
 export default signupForm;
