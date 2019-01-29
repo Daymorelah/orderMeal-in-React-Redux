@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 export default (
   state = {
-    userDetails: {}, message: null, isAuthenticated: false, status: null
+    userDetails: {}, message: '', isAuthenticated: false, status: ''
   },
   action
 ) => {
@@ -10,7 +10,7 @@ export default (
     case actionTypes.SIGNUP_USER_SUCCESS:
       return {
         ...state,
-        userDetails: action.userCreated.data,
+        userDetails: action.userCreated,
         message: action.userCreated.message,
         isAuthenticated: true,
         status: true,

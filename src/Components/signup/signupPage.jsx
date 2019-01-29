@@ -6,12 +6,18 @@ import SignupForm from './signupForm';
 import Footer from '../footer';
 import * as signupActions from '../../actions/signupActions';
 
-class Signup extends Component {
+export class SignupPage extends Component {
   constructor(props) {
     super(props);
+    this.initialState = {
+      username: '',
+      password: '',
+      email: '',
+    };
     this.state = {
       isTyping: false,
       buttonStatus: 'Signup',
+      ...this.initialState,
     };
     this.handleOnsubmit = this.handleOnsubmit.bind(this);
     this.handleOnInputChange = this.handleOnInputChange.bind(this);
@@ -24,16 +30,24 @@ class Signup extends Component {
     }
   }
 
-  handleOnsubmit(userDetails) {
+  handleOnsubmit(event) {
+    event.preventDefault();
     const { signupUser, history } = this.props;
     this.setState({ isTyping: false, buttonStatus: 'Signing in...' });
-    signupUser(userDetails).then((response) => {
-      if (response === undefined) setTimeout(() => history.push('/home'), 3000);
+    const { username, password, email } = this.state;
+    signupUser({ username, password, email }).then((response) => {
+      if (response === undefined) {
+        history.push('/home');
+      }
     });
   }
 
-  handleOnInputChange() {
-    this.setState({ isTyping: true, buttonStatus: 'Signup' });
+  handleOnInputChange(event) {
+    this.setState({
+      isTyping: true,
+      buttonStatus: 'Signup',
+      [event.target.id]: event.target.value
+    });
   }
 
   render() {
@@ -43,12 +57,13 @@ class Signup extends Component {
       <div>
         <NavigationBar />
         <SignupForm
-          submitUserDetails={this.handleOnsubmit}
+          onClick={this.handleOnsubmit}
           message={registeredUser.message}
           status={registeredUser.status}
-          checkIfTyping={this.handleOnInputChange}
+          onChange={this.handleOnInputChange}
           isTyping={isTyping}
           buttonStatus={buttonStatus}
+          {...this.state}
         />
         <Footer />
       </div>
@@ -56,19 +71,21 @@ class Signup extends Component {
   }
 }
 
-Signup.propTypes = {
-  registeredUser: PropTypes.arrayOf(PropTypes.object).isRequired,
+SignupPage.propTypes = {
+  registeredUser: PropTypes.objectOf(PropTypes.any).isRequired,
   signupUser: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
+  history: PropTypes.oneOfType([
+    PropTypes.object, PropTypes.number, PropTypes.string
+  ]).isRequired,
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   registeredUser: state.currentUser
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   signupUser: userDetails => dispatch(signupActions.signupUser(userDetails))
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);
