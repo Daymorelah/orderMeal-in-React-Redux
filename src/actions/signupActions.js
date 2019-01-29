@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import attachAuthToken from '../utilities/attachAuthToken';
 
 const domain = (process.env.NODE_ENV === 'development')
   ? 'http://localhost:2022' : process.env.PRODUCTION_URL;
@@ -31,7 +30,6 @@ export const signupUser = userDetails => dispatch => axios
   .then((response) => {
     if (response.status === 201) {
       localStorage.setItem('token', response.data.data.token);
-      attachAuthToken(response.data.data.token);
       dispatch(signupUserSuccess(response.data.data));
     }
   })
