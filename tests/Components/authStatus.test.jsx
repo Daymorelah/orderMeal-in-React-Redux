@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import SignupStatus from '../../../src/Components/signup/signupStatus';
+import AuthStatus from '../../src/Components/authStatus';
 
 describe('Unit test for the Signup status component', () => {
   it('should render a success message with success style applied', () => {
@@ -9,7 +9,7 @@ describe('Unit test for the Signup status component', () => {
       status: true,
       isTyping: false
     };
-    const wrapper = shallow(<SignupStatus {...propsObj} />);
+    const wrapper = shallow(<AuthStatus {...propsObj} />);
     expect(wrapper.find('section').is('#success-error-response')).toEqual(true);
     expect(wrapper.find('div').is('#response-container')).toEqual(true);
     expect(wrapper.find('[classToApply="success-response"]'));
@@ -21,7 +21,7 @@ describe('Unit test for the Signup status component', () => {
       status: false,
       isTyping: false
     };
-    const wrapper = shallow(<SignupStatus {...propsObj} />);
+    const wrapper = shallow(<AuthStatus {...propsObj} />);
     expect(wrapper.find('section').is('#success-error-response')).toEqual(true);
     expect(wrapper.find('div').is('#response-container')).toEqual(true);
     expect(wrapper.find('[classToApply="error-response"]'));
@@ -33,7 +33,7 @@ describe('Unit test for the Signup status component', () => {
       status: false,
       isTyping: true
     };
-    const wrapper = shallow(<SignupStatus {...propsObj} />);
+    const wrapper = shallow(<AuthStatus {...propsObj} />);
     expect(wrapper.find('section').is('#success-error-response')).toEqual(true);
     expect(wrapper.find('div').is('#response-container')).toEqual(true);
     expect(wrapper.find('[classToApply=""]'));

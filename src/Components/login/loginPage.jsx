@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import LoginForm from './loginForm';
 import NavigationBar from '../navigationBar';
-import SignupForm from './signupForm';
 import Footer from '../footer';
 import * as authActions from '../../actions/authActions';
 
-export class SignupPage extends Component {
-  constructor(props) {
-    super(props);
-    this.initialState = {
-      username: '',
-      password: '',
-      email: '',
-    };
-    this.state = {
-      isTyping: false,
-      buttonStatus: 'Signup',
-      ...this.initialState,
-    };
-    this.handleOnsubmit = this.handleOnsubmit.bind(this);
-    this.handleOnInputChange = this.handleOnInputChange.bind(this);
-  }
+export class LoginPage extends Component {
+  initialState = {
+    username: '',
+    password: '',
+  };
+
+  state = {
+    isTyping: false,
+    buttonStatus: 'Login',
+    ...this.initialState,
+  };
 
   componentDidMount() {
     const { registeredUser, history } = this.props;
@@ -30,22 +25,22 @@ export class SignupPage extends Component {
     }
   }
 
-  handleOnsubmit(event) {
+  handleOnsubmit = (event) => {
     event.preventDefault();
-    const { signupUser, history } = this.props;
-    this.setState({ isTyping: false, buttonStatus: 'Signing in...' });
+    const { loginUser, history } = this.props;
+    this.setState({ isTyping: false, buttonStatus: 'Logging in...' });
     const { username, password, email } = this.state;
-    signupUser({ username, password, email }, 'signup').then((response) => {
+    loginUser({ username, password, email }, 'login').then((response) => {
       if (response === undefined) {
         history.push('/home');
       }
     });
   }
 
-  handleOnInputChange(event) {
+  handleOnInputChange = (event) => {
     this.setState({
       isTyping: true,
-      buttonStatus: 'Signup',
+      buttonStatus: 'Login',
       [event.target.id]: event.target.value
     });
   }
@@ -56,7 +51,7 @@ export class SignupPage extends Component {
     return (
       <div>
         <NavigationBar />
-        <SignupForm
+        <LoginForm
           onClick={this.handleOnsubmit}
           message={registeredUser.message}
           status={registeredUser.status}
@@ -71,9 +66,9 @@ export class SignupPage extends Component {
   }
 }
 
-SignupPage.propTypes = {
+LoginPage.propTypes = {
   registeredUser: PropTypes.objectOf(PropTypes.any).isRequired,
-  signupUser: PropTypes.func.isRequired,
+  loginUser: PropTypes.func.isRequired,
   history: PropTypes.oneOfType([
     PropTypes.object, PropTypes.number, PropTypes.string
   ]).isRequired,
@@ -84,9 +79,8 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  signupUser: (userDetails, authType) => dispatch(authActions
+  loginUser: (userDetails, authType) => dispatch(authActions
     .authUser(userDetails, authType))
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
