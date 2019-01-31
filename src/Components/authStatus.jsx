@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import toastr from '../../utilities/toastrUtil';
+import toastr from '../utilities/toastrUtil';
 
 const SignupStatus = ({ statusMessage, status, isTyping }) => {
   let classToApply = '';

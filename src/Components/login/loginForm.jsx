@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FormInput from '../formInput';
-import AuthStatus from '../authStatus';
 import AuthButton from '../authButton';
+import AuthStatus from '../authStatus';
 
-const SignupForm = ({
+const LoginForm = ({
   onClick, message, status, onChange, isTyping, buttonStatus,
-  username, email, password
+  username, password
 }) => (
   <main>
     <div id="page-container">
@@ -39,23 +39,15 @@ const SignupForm = ({
               onChange={onChange}
               required
             />
-            <FormInput
-              type="email"
-              id="email"
-              placeHolder="email"
-              value={email}
-              onChange={onChange}
-              required
-            />
             <AuthButton
               buttonStatus={buttonStatus}
               onClick={onClick}
-              id="signup-button"
-              authType="Signup"
+              id="login-button"
+              authType="Login"
             />
-            <h3 id="login">
+            <h3 id="signup">
               Do you have an account?
-              <Link to="/login">Login</Link>
+              <Link to="/signup">signup</Link>
             </h3>
           </form>
         </div>
@@ -64,7 +56,7 @@ const SignupForm = ({
   </main>
 );
 
-SignupForm.propTypes = {
+LoginForm.propTypes = {
   onClick: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   status: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
@@ -73,7 +65,6 @@ SignupForm.propTypes = {
   buttonStatus: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
 };
 
-export default SignupForm;
+export default LoginForm;

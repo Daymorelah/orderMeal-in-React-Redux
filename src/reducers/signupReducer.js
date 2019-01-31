@@ -7,7 +7,7 @@ export default (
   action
 ) => {
   switch (action.type) {
-    case actionTypes.SIGNUP_USER_SUCCESS:
+    case actionTypes.AUTH_USER_SUCCESS:
       return {
         ...state,
         userDetails: action.userCreated,

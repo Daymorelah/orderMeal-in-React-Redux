@@ -21,14 +21,14 @@ export const generalError = () => ({
   message: 'Something awful happened. We will fix this soon.'
 });
 export const signupUserSuccess = userCreated => ({
-  type: actionTypes.SIGNUP_USER_SUCCESS,
+  type: actionTypes.AUTH_USER_SUCCESS,
   userCreated,
 });
 
-export const signupUser = userDetails => dispatch => axios
-  .post(`${domain}/api/v1/auth/signup`, userDetails)
+export const authUser = (userDetails, authType) => dispatch => axios
+  .post(`${domain}/api/v1/auth/${authType}`, userDetails)
   .then((response) => {
-    if (response.status === 201) {
+    if (response.status === 201 || response.status === 200) {
       localStorage.setItem('token', response.data.data.token);
       dispatch(signupUserSuccess(response.data.data));
     }

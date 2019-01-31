@@ -13,7 +13,7 @@ describe('Unit test for the signup reducer ', () => {
       message: 'some message'
     };
     const signupActionDispatched = {
-      type: actionTypes.SIGNUP_USER_SUCCESS,
+      type: actionTypes.AUTH_USER_SUCCESS,
       userCreated,
     };
     expect(signupReducer({}, signupActionDispatched))
