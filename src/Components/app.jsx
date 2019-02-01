@@ -4,6 +4,7 @@ import AboutPage from './about';
 import HomePage from './home';
 import SignupPage from './signup/signupPage';
 import LoginPage from './login/loginPage';
+import MenuPage from './listMenu/menuPage';
 
 const App = () => (
   <div>
@@ -12,6 +13,7 @@ const App = () => (
       <Route exact path="/home" component={HomePage} />
       <Route exact path="/signup" component={SignupPage} />
       <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/menu" component={MenuPage} />
     </Switch>
   </div>
 );
