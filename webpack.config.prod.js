@@ -2,12 +2,12 @@ import webpack from 'webpack';
 import path from 'path';
 
 export default {
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   mode: 'production',
-  entry: [`${__dirname}/src/`],
+  entry: `${__dirname}/src/index.jsx`,
   target: 'web',
   output: {
-    path: path.join(__dirname, '/dist'), // Note: Physical files are only output by the production build task `npm run build`.
+    path: `${__dirname}/dist`, // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: '/',
     filename: 'bundle.js'
   },

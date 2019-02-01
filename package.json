@@ -4,8 +4,8 @@
   "description": "front-end implementation of the order-meal app using React/Redux.",
   "main": "index.js",
   "scripts": {
-    "prebuild": "babel server.prod.js webpack.config.prod.js --out-dir ./build && babel src --out-dir ./build/src",
-    "build": "node build/server.prod.js",
+    "prebuild": "babel server.prod.js webpack.config.prod.js --out-dir build && babel src --out-dir build/src",
+    "host-on-heroku": "node build/server.prod.js",
     "tests": "export NODE_ENV=test&& mocha --reporter progress --require babel-register --require babel-polyfill --exit \"tests/index.js\"",
     "test": "jest --coverage",
     "start": "babel-node server.js",
