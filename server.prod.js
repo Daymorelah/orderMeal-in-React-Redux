@@ -6,9 +6,8 @@ import path from 'path';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-});
+app.use(express.static(__dirname));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.listen(PORT, (err) => {
   if (err) {

@@ -20,7 +20,7 @@ const Card = () => (
         </p>
       </div>
       <div className="card-footer">
-        <button className="add-to-cart" type="button">
+        <button className="add-to-cart" id="card-button" type="button">
           Add to cart
         </button>
       </div>

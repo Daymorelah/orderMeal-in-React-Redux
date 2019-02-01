@@ -166,7 +166,7 @@ nav{
   width: 50%;
   margin: 0.8em auto;
 }
-button {
+#card-button {
   border: none;
   outline: none;
   padding: 6px;

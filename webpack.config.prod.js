@@ -1,22 +1,19 @@
-import webpack from 'webpack';
-import path from 'path';
 
-export default {
-  devtool: 'source-map',
+const path = require('path');
+const htmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
   mode: 'production',
-  entry: `${__dirname}/src/index.jsx`,
+  entry: './src/index.jsx',
   target: 'web',
   output: {
-    path: `${__dirname}/dist`, // Note: Physical files are only output by the production build task `npm run build`.
-    publicPath: '/',
+    path: path.join(__dirname, 'build'),
     filename: 'bundle.js'
   },
-  devServer: {
-    contentBase: `${__dirname}/src`,
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new htmlWebpackPlugin({
+      template: './index.prod.html',
+    }),
   ],
   module: {
     rules: [
@@ -33,10 +30,6 @@ export default {
           { loader: 'css-loader' }
         ],
       },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: 'file-loader' },
-      { test: /\.(woff|woff2)$/, use: 'url?prefix=font/&limit=5000' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: 'url?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: 'url?limit=10000&mimetype=image/svg+xml' }
     ]
   },
   resolve: {
