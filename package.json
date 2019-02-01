@@ -4,7 +4,7 @@
   "description": "front-end implementation of the order-meal app using React/Redux.",
   "main": "index.js",
   "scripts": {
-    "prebuild": "babel server.prod.js webpack.config.prod.js --out-dir build && babel src --out-dir build/src && cp src/style/* build/src/style/",
+    "prebuild": "babel server.prod.js webpack.config.prod.js --out-dir build && babel src --out-dir build/src && cp src/style/* ./build/src/style/",
     "build": "npm run prebuild && node build/server.prod.js",
     "tests": "export NODE_ENV=test&& mocha --reporter progress --require babel-register --require babel-polyfill --exit \"tests/index.js\"",
     "test": "jest --coverage",
