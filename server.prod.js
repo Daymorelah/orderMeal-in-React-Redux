@@ -21,10 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.get('*', (req, res) => {
-  if (app.get('env') === 'production') {
-    return res.sendFile(path.resolve(__dirname, '../index.html'));
-  }
-  return res.sendFile(path.join(__dirname, './index.html'));
+  res.sendFile(path.resolve(__dirname, '../index.html'));
 });
 
 app.listen(PORT, (err) => {
