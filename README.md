@@ -31,8 +31,6 @@ To run tests:
 * `CD` into the project directory
 * Run `npm run test` to run tests on the app
 
-The UI (_static_) templates for this App can be viewed on [GitHub Pages](https://pages.github.com/) via the URL below :
-* [Ride Mw:](https://daymorelah.github.io/RideMyWay/UI/html/landingPage.html)
 
 ## Contributing
 * Fork this repository
