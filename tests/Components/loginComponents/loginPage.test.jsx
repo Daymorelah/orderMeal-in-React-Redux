@@ -12,7 +12,7 @@ describe('Unit test for the login page', () => {
       message: 'some message',
       status: 'some status',
     },
-    signupUser: () => {},
+    loginUser: () => {},
     history: {
       path: ''
     }

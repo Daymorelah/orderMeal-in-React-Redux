@@ -88,7 +88,7 @@ nav{
   width: 100%;
   margin-bottom: 1.8em;
 }
-input {
+#signup-form input, login-form input {
   width: 90%;
   border: none;
   outline: none;

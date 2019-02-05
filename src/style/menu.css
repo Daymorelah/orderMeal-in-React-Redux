@@ -32,7 +32,7 @@ img {
   width: 75%;
   margin: auto;
 }
-#page-container {
+#menu-page-container {
   margin-bottom: 6em;
 }
 /* Design navigation */
@@ -169,11 +169,12 @@ nav{
 #card-button {
   border: none;
   outline: none;
-  padding: 6px;
+  padding: unset;
   color: var(--primary-light);
   border-radius: 8px;
   text-transform: capitalize;
   cursor: pointer;
+  font-size: smaller;
 }
 .add-to-cart {
   background: #538f53;
@@ -340,9 +341,7 @@ nav{
 /* Spinner animation */
 #loader-container {
   display: none;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  text-align: -webkit-center;
   margin-top: 1.8em;
 }
 #loader {

@@ -4,3 +4,5 @@ export const NO_INTERNET = 'NO_INTERNET';
 export const SERVER_ERROR = 'SERVER_ERROR';
 export const CLIENT_ERROR = 'CLIENT_ERROR';
 export const GENERAL_ERROR = 'GENERAL_ERROR';
+export const LOAD_MENU_SUCCESS = 'LOAD_MENU_SUCCESS';
+export const NO_MENU_TYPE_YET = 'NO_MENU_TYPE_YET';
