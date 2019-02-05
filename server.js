@@ -2,7 +2,6 @@ import express from 'express';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import path from 'path';
 import config from './webpack.config.dev';
 
 /* eslint-disable no-console */
@@ -21,10 +20,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.get('*', (req, res) => {
-  if (app.get('env') === 'production') {
-    return res.sendFile(path.resolve(__dirname, '../index.html'));
-  }
-  return res.sendFile(path.join(__dirname, './index.html'));
+  res.sendFile(`${__dirname}/index.html`);
 });
 
 app.listen(PORT, (err) => {

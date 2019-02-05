@@ -20,7 +20,7 @@ const LoginForm = ({
           status={status}
           isTyping={isTyping}
         />
-        <div id="signup-form">
+        <div id="login-form">
           <h2>please signup</h2>
           <form>
             <FormInput
