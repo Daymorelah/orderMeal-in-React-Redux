@@ -33,7 +33,6 @@ export class MenuPage extends Component {
     loadMenu(filterBy)
       .then(() => this.setState({ isRequestSent: false }))
       .catch((error) => {
-        console.log('i got caught in catch ==> ', error.message);
         this.setState({ isRequestSent: false });
         toastr('error', error.message, 4000);
       });

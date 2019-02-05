@@ -20,16 +20,16 @@ describe('Unit test for the signup reducer ', () => {
         noMenu: ''
       });
   });
-  it('should update the store when there is a client error during signup',
-    () => {
-      const signupActionDispatched = {
-        type: actionTypes.NO_MENU_TYPE_YET,
-        payload: 'some menu type'
-      };
-      expect(menuReducer({}, signupActionDispatched))
-        .toEqual({
-          noMenu: 'some menu type',
-          menu: []
-        });
-    });
+  it('should update the store when there is a client '
+    + 'error during signup', () => {
+    const signupActionDispatched = {
+      type: actionTypes.NO_MENU_TYPE_YET,
+      payload: 'some menu type'
+    };
+    expect(menuReducer({}, signupActionDispatched))
+      .toEqual({
+        noMenu: 'some menu type',
+        menu: []
+      });
+  });
 });
