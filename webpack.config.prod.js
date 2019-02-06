@@ -1,6 +1,8 @@
-
+const webpack = require('webpack');
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -14,6 +16,8 @@ module.exports = {
     new htmlWebpackPlugin({
       template: './index.prod.html',
     }),
+    new webpack.EnvironmentPlugin({ 'process.env.NODE_ENV': 'production' }),
+    new Dotenv(),
   ],
   module: {
     rules: [
@@ -34,5 +38,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json']
-  }
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+  },
 };
