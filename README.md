@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Daymorelah/orderMeal-in-React-Redux.svg?branch=development)](https://travis-ci.org/Daymorelah/orderMeal-in-React-Redux)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d1d3edcb0e5960129d31/test_coverage)](https://codeclimate.com/github/Daymorelah/orderMeal-in-React-Redux/test_coverage)
-[![Coverage Status](https://coveralls.io/repos/github/Daymorelah/orderMeal-in-React-Redux/badge.svg?branch=development)](https://coveralls.io/github/Daymorelah/orderMeal-in-React-Redux?branch=development)
+[![Coverage Status](https://coveralls.io/repos/github/Daymorelah/orderMeal-in-React-Redux/badge.svg?branch=ch-integrate-coveralls-163748669)](https://coveralls.io/github/Daymorelah/orderMeal-in-React-Redux?branch=ch-integrate-coveralls-163748669)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d1d3edcb0e5960129d31/maintainability)](https://codeclimate.com/github/Daymorelah/orderMeal-in-React-Redux/maintainability)
 
 # orderMeal-in-React-Redux
