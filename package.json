@@ -9,10 +9,7 @@
     "tests": "export NODE_ENV=test&& mocha --reporter progress --require babel-register --require babel-polyfill --exit \"tests/index.js\"",
     "test": "jest --coverage",
     "start": "babel-node server.js",
-    "lint": "node_modules/.bin/esw webpack.config.* src",
-    "lint:watch": "npm run lint -- --watch",
-    "test-coverage": "export NODE_ENV=test&& babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter progress --require babel-register --require babel-polyfill --exit tests/index.js",
-    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "react",
