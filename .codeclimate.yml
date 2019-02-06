@@ -7,7 +7,7 @@ checks:
   complex-logic:
     enabled: true
     config:
-      threshold: 6
+      threshold: 8
   file-lines:
     enabled: true
     config:
@@ -41,8 +41,8 @@ checks:
     config:
       threshold: #language-specific defaults. overrides affect all languages.
 exclude_patterns:
-- "dist/"
-- "**/node_modules/"
-- "/test/"
-- "**/*.d.ts"
-- "coverage"
+  - "dist/"
+  - "**/node_modules/"
+  - "/test/"
+  - "**/*.d.ts"
+  - "coverage"
