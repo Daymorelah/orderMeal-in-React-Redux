@@ -111,7 +111,6 @@ describe('Unit test for the MenuPage component', () => {
       quantity: 3
     }];
     wrapper.find('MenuPage').setState({ menuItemSelected: menuItems });
-    console.log(wrapper.debug());
     wrapper.find('.add').simulate('click', { id: 1 });
     wrapper.find('.reduce').simulate('click', { id: 1 });
     wrapper.find('.remove-meal').simulate('click', { id: 3 });
@@ -127,9 +126,11 @@ describe('Unit test for the MenuPage component', () => {
     }];
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
     wrapper.find('MenuPage').setState({ isRequestSent: false });
-    wrapper.find('Button#card-button').simulate('click', { target: { style: { display: 'none' } } }, menuItems);
+    wrapper.find('Button#card-button')
+      .simulate('click', { target: { style: { display: 'none' } } }, menuItems);
     expect(wrapper.find('MenuPage').state('isMealCanceled')).toEqual(false);
-    expect(wrapper.find('MenuPage').state('menuItemSelected').length).toEqual(1);
+    expect(wrapper.find('MenuPage')
+      .state('menuItemSelected').length).toEqual(1);
   });
   it('should not duplicate a menu card in localstorage', () => {
     const menuItems = [{
@@ -140,10 +141,13 @@ describe('Unit test for the MenuPage component', () => {
       quantity: 3
     }];
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
-    wrapper.find('MenuPage').setState({ menuItemSelected: menuItems, isRequestSent: false });
-    wrapper.find('Button#card-button').simulate('click', { target: { style: { display: 'none' } } }, menuItems);
+    wrapper.find('MenuPage')
+      .setState({ menuItemSelected: menuItems, isRequestSent: false });
+    wrapper.find('Button#card-button')
+      .simulate('click', { target: { style: { display: 'none' } } }, menuItems);
     expect(wrapper.find('MenuPage').state('isMealCanceled')).toEqual(false);
-    expect(wrapper.find('MenuPage').state('menuItemSelected').length).toEqual(1);
+    expect(wrapper.find('MenuPage')
+      .state('menuItemSelected').length).toEqual(1);
   });
   it('should return card display to block when an order is cancelled', () => {
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
@@ -151,7 +155,8 @@ describe('Unit test for the MenuPage component', () => {
     expect(wrapper.find('MenuPage').state('isMealCanceled')).toEqual(true);
     expect(wrapper.find('MenuPage').state('showOrders')).toEqual(false);
   });
-  it('should show orders in cart when the placer order button is clicked', () => {
+  it('should show orders in cart when the placer '
+    + 'order button is clicked', () => {
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
     wrapper.find('#ordered-meal-text #add-order').simulate('click');
     expect(wrapper.find('MenuPage').state('showOrders')).toEqual(true);

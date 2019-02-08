@@ -29,9 +29,11 @@ export class MenuPage extends Component {
     const itemsPreviouslySelected = JSON
       .parse(localStorage.getItem('menuItemSelected'));
     loadMenu(filterBy)
-      .then(() => this.setState({ isRequestSent: false }))
+      .then(() => {
+        this.setState({ isRequestSent: false });
+        this.setState({ menuItemSelected: itemsPreviouslySelected || [] });
+      })
       .catch(error => toastr('error', error.message, 4000));
-    this.setState({ menuItemSelected: itemsPreviouslySelected || [] });
   }
 
   handleFilterBy = () => {
