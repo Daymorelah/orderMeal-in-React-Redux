@@ -31,6 +31,7 @@ To run tests:
 * `CD` into the project directory
 * Run `npm run test` to run tests on the app
 
+##### To view the app on Heroku click [here](https://omeal.herokuapp.com/)
 
 ## Contributing
 * Fork this repository
