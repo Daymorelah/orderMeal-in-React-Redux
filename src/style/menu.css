@@ -285,7 +285,7 @@ nav{
   width: 100%;
   margin: auto;
 }
-#contact-user input{ 
+#contact-user input, #contact-user input { 
   width: 100%;
   margin: 0.8em auto;
   display: block;

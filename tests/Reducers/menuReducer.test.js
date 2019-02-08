@@ -1,7 +1,7 @@
 import * as actionTypes from '../../src/actions/actionTypes';
 import menuReducer from '../../src/reducers/menuReducer';
 
-describe('Unit test for the signup reducer ', () => {
+describe('Unit test for the menu reducer ', () => {
   it('should return the initial state of the store ', () => {
     const initialState = { menu: [], noMenu: '' };
     expect(menuReducer(undefined, {})).toEqual(initialState);
@@ -20,8 +20,8 @@ describe('Unit test for the signup reducer ', () => {
         noMenu: ''
       });
   });
-  it('should update the store when there is a client '
-    + 'error during signup', () => {
+  it('should update the store when there is a no menu '
+    + 'yet', () => {
     const signupActionDispatched = {
       type: actionTypes.NO_MENU_TYPE_YET,
       payload: 'some menu type'

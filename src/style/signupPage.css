@@ -55,14 +55,14 @@ nav{
   margin-bottom: 1.8em;
   text-transform: capitalize;
 }
-#signup-form {
+#signup-form, #login-form {
   background: var(--primary-light);
   border-radius: 8px;
   padding: 1.5em 0;
   width: 95%;
   margin: auto;
 }
-#signup-form h2 {
+#signup-form h2, #login-form h2 {
   text-transform: capitalize;
   text-align: center;
   margin: 0.5em 0;
@@ -88,7 +88,7 @@ nav{
   width: 100%;
   margin-bottom: 1.8em;
 }
-#signup-form input, login-form input {
+#signup-form input, #login-form input {
   width: 90%;
   border: none;
   outline: none;
@@ -162,7 +162,7 @@ button:disabled {
   }
 }
 @media screen and (min-width: 480px) {
-  #signup-form {
+  #signup-form, #login-form {
     width: 85%;
     margin: auto;
   }
@@ -197,7 +197,7 @@ button:disabled {
     width: 80%;
     margin: auto;
   }
-  #signup-form {
+  #signup-form, #login-form {
     width: 70%;
     margin: auto;
   }

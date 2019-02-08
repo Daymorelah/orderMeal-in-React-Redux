@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import toastr from '../../utilities/toastrUtil';
+import toastrUtil from '../../utilities/toastrUtil';
 import CardContainer from './cardContainer';
 import MenuHeading from './menuHeading';
 import Paginate from '../paginate';
@@ -11,6 +11,7 @@ import Loading from '../loading';
 import CreateOrder from '../createOrder/createOrder';
 import Footer from '../footer';
 import * as menuActions from '../../actions/menuActions';
+import * as placeOrderActions from '../../actions/placeOrderAction';
 
 export class MenuPage extends Component {
   state = {
@@ -28,12 +29,18 @@ export class MenuPage extends Component {
     const { filterBy } = this.state;
     const itemsPreviouslySelected = JSON
       .parse(localStorage.getItem('menuItemSelected'));
+    const phoneNumber = localStorage.getItem('phoneNumber');
+    const address = localStorage.getItem('address');
     loadMenu(filterBy)
       .then(() => {
-        this.setState({ isRequestSent: false });
-        this.setState({ menuItemSelected: itemsPreviouslySelected || [] });
+        this.setState({
+          isRequestSent: false,
+          menuItemSelected: itemsPreviouslySelected || [],
+          address,
+          phoneNumber
+        });
       })
-      .catch(error => toastr('error', error.message, 4000));
+      .catch(error => toastrUtil('error', error.message, 4000));
   }
 
   handleFilterBy = () => {
@@ -44,7 +51,7 @@ export class MenuPage extends Component {
       .then(() => this.setState({ isRequestSent: false }))
       .catch((error) => {
         this.setState({ isRequestSent: false });
-        toastr('error', error.message, 4000);
+        toastrUtil('error', error.message, 4000);
       });
   }
 
@@ -116,7 +123,32 @@ export class MenuPage extends Component {
     this.setState({ phoneNumber: event.target.value });
   }
 
-  handleCreateOrder = () => {}
+  handleCreateOrder = () => {
+    const { placeOrder } = this.props;
+    const { address, phoneNumber } = this.state;
+    let meal = [], quantity = [], drink = [], prize = 0;
+    const name = JSON.parse(localStorage.getItem('userDetails')).username;
+    const menuItemsInCart = JSON
+      .parse(localStorage.getItem('menuItemSelected'));
+    menuItemsInCart.forEach((menuItem) => {
+      meal.push(menuItem.meal); drink.push(menuItem.drink);
+      prize += (menuItem.quantity * menuItem.prize);
+      quantity.push(`${menuItem.meal}::${menuItem.quantity}`);
+    });
+    meal = /^[a-z][A-Z]/.test(meal) ? meal.join() : 'No-meal';
+    drink = /^[a-z][A-Z]/.test(drink) ? drink.join() : 'No-drink';
+    quantity = quantity.join();
+    prize = prize.toString();
+    const orderDetails = {
+      address, phoneNumber, name, prize, quantity, meal, drink
+    };
+    placeOrder(orderDetails).then((res) => {
+      if (res.code === 201) return toastrUtil('success', res.message, 3000);
+      toastrUtil('error', 'Could not place your order. Please try again', 4000);
+    }).catch((err) => {
+      toastrUtil('error', err.message, 4000);
+    });
+  }
 
   render() {
     const { menu, menuTypeUnavailable } = this.props;
@@ -175,13 +207,16 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  loadMenu: filterBy => dispatch(menuActions.loadMenu(filterBy))
+  loadMenu: filterBy => dispatch(menuActions.loadMenu(filterBy)),
+  placeOrder: orderDetails => dispatch(placeOrderActions
+    .placeOrder(orderDetails)),
 });
 
 MenuPage.propTypes = {
   loadMenu: PropTypes.func.isRequired,
   menu: PropTypes.arrayOf(PropTypes.object).isRequired,
   menuTypeUnavailable: PropTypes.string.isRequired,
+  placeOrder: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuPage);

@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import Dotenv from 'dotenv-webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
@@ -17,7 +18,9 @@ export default {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.EnvironmentPlugin({ 'process.env.NODE_ENV': 'development' }),
+    new Dotenv(),
   ],
   module: {
     rules: [
