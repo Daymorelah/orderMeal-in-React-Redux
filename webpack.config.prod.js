@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -17,7 +16,10 @@ module.exports = {
       template: './index.prod.html',
     }),
     new webpack.EnvironmentPlugin({ 'process.env.NODE_ENV': 'production' }),
-    new Dotenv(),
+    new webpack.DefinePlugin({
+      'process.env.PRODUCTION_URL': JSON
+        .stringify('https://ordermymeal.herokuapp.com'),
+    }),
   ],
   module: {
     rules: [
