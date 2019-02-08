@@ -2,7 +2,9 @@ import React from 'react';
 import PropType from 'prop-types';
 import Card from '../card';
 
-const CardContainer = ({ menu, onClick, menuTypeUnavailable }) => (
+const CardContainer = ({
+  menu, onClick, menuTypeUnavailable, isMealCanceled
+}) => (
   <div id="meal-card-container">
     { menuTypeUnavailable.length
       ? (
@@ -11,11 +13,11 @@ const CardContainer = ({ menu, onClick, menuTypeUnavailable }) => (
             {`There are no ${menuTypeUnavailable} available yet.`}
           </h3>
           <p>
-            You can check back soon or go to your
+              You can check back soon or go to your
             <a // eslint-disable-line jsx-a11y/anchor-is-valid
               href="#"
             >
-              Profile page
+                Profile page
             </a>
           </p>
         </div>
@@ -27,10 +29,12 @@ const CardContainer = ({ menu, onClick, menuTypeUnavailable }) => (
             meal={menuItem.meal}
             mealType={menuItem.meal_type}
             prize={menuItem.prize}
-            onClick={onClick}
+            onClick={event => onClick(event, menuItem)}
+            isMealCanceled={isMealCanceled}
           />
-        )))
-    }
+        ))
+      )
+        }
   </div>
 );
 
@@ -38,6 +42,7 @@ CardContainer.propTypes = {
   menu: PropType.arrayOf(PropType.object).isRequired,
   onClick: PropType.func.isRequired,
   menuTypeUnavailable: PropType.string.isRequired,
+  isMealCanceled: PropType.bool.isRequired,
 };
 
 export default CardContainer;

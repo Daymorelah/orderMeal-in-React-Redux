@@ -8,22 +8,30 @@ import Paginate from '../paginate';
 import SearchMenu from './searchMenu';
 import Header from '../navigationBar';
 import Loading from '../loading';
-import CreateOrder from './createOrder';
+import CreateOrder from '../createOrder/createOrder';
 import Footer from '../footer';
 import * as menuActions from '../../actions/menuActions';
 
 export class MenuPage extends Component {
-  state= {
+  state = {
     isRequestSent: true,
-    filterBy: ''
+    filterBy: '',
+    showOrders: false,
+    menuItemSelected: [],
+    isMealCanceled: false,
+    address: '',
+    phoneNumber: '',
   };
 
   componentDidMount() {
     const { loadMenu } = this.props;
     const { filterBy } = this.state;
+    const itemsPreviouslySelected = JSON
+      .parse(localStorage.getItem('menuItemSelected'));
     loadMenu(filterBy)
       .then(() => this.setState({ isRequestSent: false }))
       .catch(error => toastr('error', error.message, 4000));
+    this.setState({ menuItemSelected: itemsPreviouslySelected || [] });
   }
 
   handleFilterBy = () => {
@@ -42,11 +50,78 @@ export class MenuPage extends Component {
     this.setState({ filterBy: event.target.value });
   }
 
-  handleMealCardOnclick = () => {}
+  handleMealCardOnclick = (event, menuItem) => {
+    event.target.style.display = 'none';
+    this.setState({ isMealCanceled: false });
+    const { menuItemSelected } = this.state;
+    if (!menuItemSelected.find(menu => menu.id === menuItem.id)) {
+      menuItem.quantity = 1;
+      this.setState({ menuItemSelected: [...menuItemSelected, menuItem] });
+      menuItemSelected.push(menuItem);
+      localStorage.setItem('menuItemSelected', JSON
+        .stringify(menuItemSelected));
+    }
+  }
+
+  showOrders = () => {
+    this.setState({ showOrders: true });
+  }
+
+  handleCancelOrder = () => {
+    this.setState((prevState) => {
+      localStorage.setItem('address', prevState.address);
+      localStorage.setItem('phoneNumber', prevState.phoneNumber);
+      return { showOrders: false, isMealCanceled: true };
+    });
+  }
+
+  handleRemoveMenuItem = (menuItemId) => {
+    const { menuItemSelected } = this.state;
+    const updatedMenuItems = menuItemSelected
+      .filter(menu => menu.id !== menuItemId);
+    this.setState({ menuItemSelected: [...updatedMenuItems] });
+    localStorage.setItem('menuItemSelected', JSON
+      .stringify(updatedMenuItems));
+  }
+
+  handleIncrementMenuItem = (menuItemId) => {
+    const { menuItemSelected } = this.state;
+    const menuToIncrement = menuItemSelected
+      .filter(menu => menu.id === menuItemId);
+    menuToIncrement[0].quantity += 1;
+    this.setState({ menuItemSelected: [...menuItemSelected] });
+    localStorage.setItem('menuItemSelected', JSON
+      .stringify([...menuItemSelected]));
+  }
+
+  handleDecrementMenuItem = (menuItemId) => {
+    const { menuItemSelected } = this.state;
+    const menuToIncrement = menuItemSelected
+      .filter(menu => menu.id === menuItemId);
+    if (menuToIncrement[0].quantity > 1) {
+      menuToIncrement[0].quantity -= 1;
+      this.setState({ menuItemSelected: [...menuItemSelected] });
+      localStorage.setItem('menuItemSelected', JSON
+        .stringify([...menuItemSelected]));
+    }
+  }
+
+  handleGetUsersAddress = (event) => {
+    this.setState({ address: event.target.value });
+  }
+
+  handleGetUsersPhoneNumber = (event) => {
+    this.setState({ phoneNumber: event.target.value });
+  }
+
+  handleCreateOrder = () => {}
 
   render() {
     const { menu, menuTypeUnavailable } = this.props;
-    const { isRequestSent } = this.state;
+    const {
+      isRequestSent, showOrders, menuItemSelected, isMealCanceled,
+      address, phoneNumber
+    } = this.state;
     return (
       <div>
         <Header />
@@ -57,7 +132,7 @@ export class MenuPage extends Component {
           />
           <section id="ordered-meals-container">
             <div className="container">
-              <MenuHeading menuItems={menu.length} />
+              <MenuHeading menuItems={menu.length} onClick={this.showOrders} />
               {
                 isRequestSent ? <Loading isRequestSent={isRequestSent} />
                   : (
@@ -65,13 +140,26 @@ export class MenuPage extends Component {
                       menu={menu}
                       menuTypeUnavailable={menuTypeUnavailable}
                       onClick={this.handleMealCardOnclick}
+                      isMealCanceled={isMealCanceled}
                     />
                   )
               }
             </div>
           </section>
           <Paginate />
-          <CreateOrder />
+          <CreateOrder
+            showOrders={showOrders}
+            menuItems={menuItemSelected}
+            cancelOrder={this.handleCancelOrder}
+            createOrder={this.handleCreateOrder}
+            removeMenuItem={this.handleRemoveMenuItem}
+            incrementMenuItem={this.handleIncrementMenuItem}
+            decrementMenuItem={this.handleDecrementMenuItem}
+            getUsersAddress={this.handleGetUsersAddress}
+            getUsersPhoneNumber={this.handleGetUsersPhoneNumber}
+            address={address}
+            phoneNumber={phoneNumber}
+          />
         </main>
         <Footer />
       </div>

@@ -96,6 +96,7 @@ nav{
   width: 8%;
   font-size: 1.2em;
   text-align: center;
+  outline: none;
 }
 #filter {
   border: none;
@@ -180,7 +181,7 @@ nav{
   background: #538f53;
   width: 80%;
 }
-.add-to-cart:disabled {
+#card-button:disabled {
   background: var(--primary);
   color: var(--primary);
 }
@@ -237,7 +238,7 @@ nav{
 }
 #modal-container {
   padding: 1em;
-  width: 30%;
+  width: 40%;
   font-size: 1.3em;
   margin: auto;
   margin-top: 2em;
@@ -248,6 +249,9 @@ nav{
   border-radius: 8px; 
   max-height: calc(100vh - 150px);
   overflow-y: auto;
+}
+#meals-ordered span {
+  outline: none;
 }
 .meal-ordered {
   border: 1px solid var(--dark);
@@ -416,6 +420,12 @@ nav{
   nav {
     padding: 0 2em;
   }
+
+}
+@media screen and (max-width: 2050px) {
+  #modal-container {
+    width: 30%;
+  }
 }
 @media screen and (max-width: 1050px) {
   .card-footer {
@@ -445,6 +455,9 @@ nav{
 @media screen and (max-width: 780px) {
   .container {
     width: 90%;
+  }
+  #modal-container {
+    width: 40%;
   }
 }
 @media screen and (min-width: 630px) {
@@ -478,10 +491,18 @@ nav{
   #search-meal-card-container input {
     width: 50%;
   }
+  #modal-container {
+    width: 60%;
+  }
 }
 @media screen and (max-width: 536px) {
   .container {
     width: 90%;
+  }
+}
+@media screen and (max-width: 470px) {
+  #modal-container {
+    width: 70%;
   }
 }
 @media screen and (max-width: 480px) {
@@ -522,5 +543,8 @@ nav{
 @media screen and (max-width: 385px) {
   .container {
     width: 90%;
+  }
+  #modal-container {
+    width: 85%;
   }
 }
