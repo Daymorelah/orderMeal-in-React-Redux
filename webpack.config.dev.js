@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
   devtool: 'val-source-map',
@@ -37,5 +38,8 @@ export default {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json']
-  }
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+  },
 };

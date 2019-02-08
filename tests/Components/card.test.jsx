@@ -8,6 +8,7 @@ describe('Unit test for the card component', () => {
       meal: 'Rice',
       mealType: 'Main dish',
       prize: 400,
+      isMealCanceled: true,
       onClick: () => {}
     };
     const wrapper = shallow(<Card {...propsObj} />);

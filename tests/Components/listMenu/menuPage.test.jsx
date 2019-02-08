@@ -89,4 +89,76 @@ describe('Unit test for the MenuPage component', () => {
     expect(searchIcon.prop('role')).toEqual('button');
     expect(wrapper.find(MenuPage).state('isRequestSent')).toEqual(true);
   });
+  it('should call appropriate methods when the user '
+    + 'types his address and phone number', () => {
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('input#address')
+      .simulate('change', { target: { value: 'some address' } });
+    expect(wrapper.find('MenuPage').state('address')).toEqual('some address');
+    wrapper.find('input#phone-number')
+      .simulate('change', { target: { value: 'some phone number' } });
+    expect(wrapper.find('MenuPage').state('phoneNumber'))
+      .toEqual('some phone number');
+  });
+  it('should call appropriate methods when the user clicks '
+    + 'on the plus , times and minus icon', () => {
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    const menuItems = [{
+      meal: 'my meal',
+      meal_type: 'my meal type',
+      prize: 200,
+      id: 1,
+      quantity: 3
+    }];
+    wrapper.find('MenuPage').setState({ menuItemSelected: menuItems });
+    wrapper.find('.add').simulate('click', { id: 1 });
+    wrapper.find('.reduce').simulate('click', { id: 1 });
+    wrapper.find('.remove-meal').simulate('click', { id: 3 });
+    expect(wrapper.find('MenuPage').state('menuItemSelected')).toEqual([]);
+  });
+  it('should call appropriate methods when an item card is clicked', () => {
+    const menuItems = [{
+      meal: 'my meal',
+      meal_type: 'my meal type',
+      prize: 200,
+      id: 1,
+      quantity: 3
+    }];
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('MenuPage').setState({ isRequestSent: false });
+    wrapper.find('Button#card-button')
+      .simulate('click', { target: { style: { display: 'none' } } }, menuItems);
+    expect(wrapper.find('MenuPage').state('isMealCanceled')).toEqual(false);
+    expect(wrapper.find('MenuPage')
+      .state('menuItemSelected').length).toEqual(1);
+  });
+  it('should not duplicate a menu card in localstorage', () => {
+    const menuItems = [{
+      meal: 'my meal',
+      meal_type: 'my meal type',
+      prize: 200,
+      id: 1,
+      quantity: 3
+    }];
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('MenuPage')
+      .setState({ menuItemSelected: menuItems, isRequestSent: false });
+    wrapper.find('Button#card-button')
+      .simulate('click', { target: { style: { display: 'none' } } }, menuItems);
+    expect(wrapper.find('MenuPage').state('isMealCanceled')).toEqual(false);
+    expect(wrapper.find('MenuPage')
+      .state('menuItemSelected').length).toEqual(1);
+  });
+  it('should return card display to block when an order is cancelled', () => {
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('Button#cancel-order').simulate('click');
+    expect(wrapper.find('MenuPage').state('isMealCanceled')).toEqual(true);
+    expect(wrapper.find('MenuPage').state('showOrders')).toEqual(false);
+  });
+  it('should show orders in cart when the placer '
+    + 'order button is clicked', () => {
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('#ordered-meal-text #add-order').simulate('click');
+    expect(wrapper.find('MenuPage').state('showOrders')).toEqual(true);
+  });
 });
