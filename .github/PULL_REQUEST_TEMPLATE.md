@@ -4,8 +4,6 @@
 * Create a branch for this feature and ensure the recommended branch naming convention is used.
 * Build HTML layouts for the comments section with functional components
 * Build Container components for this feature if necessary
-* Connect this feature with the create-comments backend API and with the redux store
-* Prevent unauthorized users from creating a comment
 * Test the feature with the browser and ensure its working as expected
 * Write unit tests for action creators, async actions, reducers, container components and functional 
 #### How should this be manually tested?

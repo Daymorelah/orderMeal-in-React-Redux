@@ -1,7 +1,7 @@
 import attachAuthToken from '../utilities/attachAuthToken';
 import * as actionTypes from './actionTypes';
 
-const { token } = JSON.parse(localStorage.getItem('userDetails'));
+const { token } = JSON.parse(localStorage.getItem('userDetails')) || '';
 
 const domain = (process.env.NODE_ENV !== 'production')
   ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL;
@@ -9,11 +9,6 @@ const domain = (process.env.NODE_ENV !== 'production')
 export const placeOrderSuccess = response => ({
   type: actionTypes.PLACE_ORDER_SUCCESS,
   order: response.order,
-});
-
-export const placeOrderError = response => ({
-  type: actionTypes.PLACE_ORDER_ERROR,
-  message: response.message,
 });
 
 export const placeOrder = orderDetails => dispatch => attachAuthToken(token)

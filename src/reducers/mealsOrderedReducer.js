@@ -5,9 +5,8 @@ export default (state = [], action) => {
     case actionTypes.PLACE_ORDER_SUCCESS:
       return [
         ...state,
-        action.order
+        ...action.order
       ];
-    case actionTypes.PLACE_ORDER_ERROR:
     default:
       return state;
   }
