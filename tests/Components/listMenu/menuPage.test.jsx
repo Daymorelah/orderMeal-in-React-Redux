@@ -14,7 +14,10 @@ describe('Unit test for the MenuPage component', () => {
       prize: 300
     }],
     loadMenu: jest.fn().mockResolvedValue(),
-    menuTypeUnavailable: ''
+    menuTypeUnavailable: '',
+    history: {
+      push: jest.fn(),
+    }
   };
   it('should call componentDidMount when the signup page'
     + 'component is mounted', () => {
@@ -160,5 +163,10 @@ describe('Unit test for the MenuPage component', () => {
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
     wrapper.find('#ordered-meal-text #add-order').simulate('click');
     expect(wrapper.find('MenuPage').state('showOrders')).toEqual(true);
+  });
+  it('should place an order when the place order button is clicked', () => {
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('Button#place-order').simulate('click');
+    expect(wrapper.find('MenuPage').prop('history').mock.calls.length).toBe(1);
   });
 });
