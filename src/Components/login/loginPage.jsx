@@ -23,7 +23,7 @@ export class LoginPage extends Component {
   componentDidMount() {
     const { registeredUser, history } = this.props;
     if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
-      history.push('/home');
+      history.push('/menu');
     }
   }
 
@@ -40,7 +40,7 @@ export class LoginPage extends Component {
       if (response === undefined) {
         this.setState({ status: true });
         toastr('success', 'yay!', 3000);
-        return history.push('/home');
+        return history.push('/menu');
       }
       this.setState({ buttonStatus: 'Login', status: false });
     });
