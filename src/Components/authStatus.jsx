@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import toastr from '../utilities/toastrUtil';
 
 const SignupStatus = ({ statusMessage, status, isTyping }) => {
   let classToApply = '';
@@ -8,11 +7,6 @@ const SignupStatus = ({ statusMessage, status, isTyping }) => {
 
   if (isTyping) response.display = 'none';
 
-  if (status === true && !isTyping) {
-    classToApply = 'success-response';
-    response.display = 'block';
-    toastr('success', statusMessage, 3000);
-  }
   if (status === false && !isTyping) {
     classToApply = 'error-response';
     response.display = 'block';

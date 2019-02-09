@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 export default (
   state = {
-    userDetails: {}, message: '', isAuthenticated: false, status: ''
+    userDetails: {}, message: '', isAuthenticated: false
   },
   action
 ) => {
@@ -13,7 +13,6 @@ export default (
         userDetails: action.userCreated,
         message: action.userCreated.message,
         isAuthenticated: true,
-        status: true,
       };
     case actionTypes.CLIENT_ERROR:
     case actionTypes.NO_INTERNET:
@@ -22,7 +21,6 @@ export default (
       return {
         ...state,
         message: action.message,
-        status: false,
       };
     default:
       return state;
