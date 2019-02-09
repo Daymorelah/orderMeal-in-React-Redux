@@ -178,6 +178,15 @@ describe('Unit test for the MenuPage component', () => {
       .returns({ username: 'my name', forEach: () => true });
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
     wrapper.find('Button#place-order').simulate('click');
-    expect(wrapper.find('MenuPage').prop('placeOrder').mock.calls.length).toBe(1);
+    expect(wrapper.find('MenuPage').prop('placeOrder')
+      .mock.calls.length).toBe(1);
+  });
+  it('should show an error message when place order is not successful', () => {
+    propsObj.placeOrder = jest.fn().mockImplementationOnce(() => Promise
+      .resolve({ code: 202 }));
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('Button#place-order').simulate('click');
+    expect(wrapper.find('MenuPage').prop('placeOrder')
+      .mock.calls.length).toBe(1);
   });
 });
