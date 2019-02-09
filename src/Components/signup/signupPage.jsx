@@ -28,7 +28,7 @@ export class SignupPage extends Component {
   componentDidMount() {
     const { registeredUser, history } = this.props;
     if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
-      history.push('/home');
+      history.push('/menu');
     }
   }
 
@@ -44,7 +44,7 @@ export class SignupPage extends Component {
     signupUser({ username, password, email }, 'signup').then((response) => {
       if (response === undefined) {
         toastr('success', 'yay!', 3000);
-        return history.push('/home');
+        return history.push('/menu');
       }
       this.setState({ buttonStatus: 'Signup', status: false });
     });
