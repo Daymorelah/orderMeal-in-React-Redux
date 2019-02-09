@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import toastr from '../../utilities/toastrUtil';
 import NavigationBar from '../navigationBar';
 import SignupForm from './signupForm';
 import Footer from '../footer';
@@ -17,6 +18,7 @@ export class SignupPage extends Component {
     this.state = {
       isTyping: false,
       buttonStatus: 'Signup',
+      status: '',
       ...this.initialState,
     };
     this.handleOnsubmit = this.handleOnsubmit.bind(this);
@@ -25,7 +27,7 @@ export class SignupPage extends Component {
 
   componentDidMount() {
     const { registeredUser, history } = this.props;
-    if (registeredUser.isAuthenticated || localStorage.getItem('token')) {
+    if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
       history.push('/home');
     }
   }
@@ -33,12 +35,18 @@ export class SignupPage extends Component {
   handleOnsubmit(event) {
     event.preventDefault();
     const { signupUser, history } = this.props;
-    this.setState({ isTyping: false, buttonStatus: 'Signing in...' });
+    this.setState({
+      sTyping: false,
+      status: true,
+      buttonStatus: 'Signing in...'
+    });
     const { username, password, email } = this.state;
     signupUser({ username, password, email }, 'signup').then((response) => {
       if (response === undefined) {
-        history.push('/home');
+        toastr('success', 'yay!', 3000);
+        return history.push('/home');
       }
+      this.setState({ buttonStatus: 'Signup', status: false });
     });
   }
 
@@ -52,14 +60,19 @@ export class SignupPage extends Component {
 
   render() {
     const { registeredUser } = this.props;
-    const { isTyping, buttonStatus } = this.state;
+    const { isTyping, buttonStatus, status } = this.state;
     return (
       <div>
-        <NavigationBar />
+        <NavigationBar
+          isAuthenticated={registeredUser.isAuthenticated}
+          showOnAuth=""
+          showOnUnauth=""
+          showRightNavBar={false}
+        />
         <SignupForm
           onClick={this.handleOnsubmit}
           message={registeredUser.message}
-          status={registeredUser.status}
+          status={status}
           onChange={this.handleOnInputChange}
           isTyping={isTyping}
           buttonStatus={buttonStatus}

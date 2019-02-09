@@ -6,7 +6,7 @@ import CardContainer from './cardContainer';
 import MenuHeading from './menuHeading';
 import Paginate from '../paginate';
 import SearchMenu from './searchMenu';
-import Header from '../navigationBar';
+import NavigationBar from '../navigationBar';
 import Loading from '../loading';
 import CreateOrder from '../createOrder/createOrder';
 import Footer from '../footer';
@@ -29,8 +29,8 @@ export class MenuPage extends Component {
     const { filterBy } = this.state;
     const itemsPreviouslySelected = JSON
       .parse(localStorage.getItem('menuItemSelected'));
-    const phoneNumber = localStorage.getItem('phoneNumber');
-    const address = localStorage.getItem('address');
+    const phoneNumber = localStorage.getItem('phoneNumber') || '';
+    const address = localStorage.getItem('address') || '';
     loadMenu(filterBy)
       .then(() => {
         this.setState({
@@ -77,11 +77,10 @@ export class MenuPage extends Component {
   }
 
   handleCancelOrder = () => {
-    this.setState((prevState) => {
-      localStorage.setItem('address', prevState.address);
-      localStorage.setItem('phoneNumber', prevState.phoneNumber);
-      return { showOrders: false, isMealCanceled: true };
-    });
+    const { address, phoneNumber } = this.state;
+    localStorage.setItem('address', address);
+    localStorage.setItem('phoneNumber', phoneNumber);
+    this.setState({ showOrders: false, isMealCanceled: true });
   }
 
   handleRemoveMenuItem = (menuItemId) => {
@@ -124,10 +123,16 @@ export class MenuPage extends Component {
   }
 
   handleCreateOrder = () => {
-    const { placeOrder } = this.props;
+    const { placeOrder, history } = this.props;
     const { address, phoneNumber } = this.state;
     let meal = [], quantity = [], drink = [], prize = 0;
-    const name = JSON.parse(localStorage.getItem('userDetails')).username;
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (userDetails === null) {
+      toastrUtil('error', 'You need to have an account to be able to place'
+      + ' an order. Please signup or login to place an order', 4000);
+      return history.push('/signup');
+    }
+    const name = userDetails.username;
     const menuItemsInCart = JSON
       .parse(localStorage.getItem('menuItemSelected'));
     menuItemsInCart.forEach((menuItem) => {
@@ -135,15 +140,18 @@ export class MenuPage extends Component {
       prize += (menuItem.quantity * menuItem.prize);
       quantity.push(`${menuItem.meal}::${menuItem.quantity}`);
     });
-    meal = /^[a-z][A-Z]/.test(meal) ? meal.join() : 'No-meal';
-    drink = /^[a-z][A-Z]/.test(drink) ? drink.join() : 'No-drink';
+    meal = meal[0] !== undefined ? meal.join() : 'No-meal';
+    drink = drink[0] !== undefined ? drink.join() : 'No-drink';
     quantity = quantity.join();
     prize = prize.toString();
     const orderDetails = {
       address, phoneNumber, name, prize, quantity, meal, drink
     };
     placeOrder(orderDetails).then((res) => {
-      if (res.code === 201) return toastrUtil('success', res.message, 3000);
+      if (res.code === 201) {
+        this.setState({ showOrders: false, isMealCanceled: true });
+        return toastrUtil('success', res.message, 3000);
+      }
       toastrUtil('error', 'Could not place your order. Please try again', 4000);
     }).catch((err) => {
       toastrUtil('error', err.message, 4000);
@@ -151,14 +159,19 @@ export class MenuPage extends Component {
   }
 
   render() {
-    const { menu, menuTypeUnavailable } = this.props;
+    const { menu, menuTypeUnavailable, registeredUser } = this.props;
     const {
       isRequestSent, showOrders, menuItemSelected, isMealCanceled,
       address, phoneNumber
     } = this.state;
     return (
       <div>
-        <Header />
+        <NavigationBar
+          isAuthenticated={registeredUser.isAuthenticated}
+          showOnAuth="View Profile"
+          showOnUnauth="Login"
+          showRightNavBar
+        />
         <main id="menu-page-container">
           <SearchMenu
             onClick={this.handleFilterBy}
@@ -204,6 +217,7 @@ export class MenuPage extends Component {
 export const mapStateToProps = state => ({
   menu: state.menuReducer.menu,
   menuTypeUnavailable: state.menuReducer.noMenu,
+  registeredUser: state.currentUser,
 });
 
 export const mapDispatchToProps = dispatch => ({
@@ -217,6 +231,10 @@ MenuPage.propTypes = {
   menu: PropTypes.arrayOf(PropTypes.object).isRequired,
   menuTypeUnavailable: PropTypes.string.isRequired,
   placeOrder: PropTypes.func.isRequired,
+  history: PropTypes.oneOfType([
+    PropTypes.object, PropTypes.number, PropTypes.string
+  ]).isRequired,
+  registeredUser: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuPage);

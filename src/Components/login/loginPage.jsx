@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import toastr from '../../utilities/toastrUtil';
 import LoginForm from './loginForm';
 import NavigationBar from '../navigationBar';
 import Footer from '../footer';
@@ -15,12 +16,13 @@ export class LoginPage extends Component {
   state = {
     isTyping: false,
     buttonStatus: 'Login',
+    status: '',
     ...this.initialState,
   };
 
   componentDidMount() {
     const { registeredUser, history } = this.props;
-    if (registeredUser.isAuthenticated || localStorage.getItem('token')) {
+    if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
       history.push('/home');
     }
   }
@@ -28,12 +30,19 @@ export class LoginPage extends Component {
   handleOnsubmit = (event) => {
     event.preventDefault();
     const { loginUser, history } = this.props;
-    this.setState({ isTyping: false, buttonStatus: 'Logging in...' });
+    this.setState({
+      isTyping: false,
+      status: true,
+      buttonStatus: 'Logging in...'
+    });
     const { username, password, email } = this.state;
     loginUser({ username, password, email }, 'login').then((response) => {
       if (response === undefined) {
-        history.push('/home');
+        this.setState({ status: true });
+        toastr('success', 'yay!', 3000);
+        return history.push('/home');
       }
+      this.setState({ buttonStatus: 'Login', status: false });
     });
   }
 
@@ -47,14 +56,19 @@ export class LoginPage extends Component {
 
   render() {
     const { registeredUser } = this.props;
-    const { isTyping, buttonStatus } = this.state;
+    const { isTyping, buttonStatus, status } = this.state;
     return (
       <div>
-        <NavigationBar />
+        <NavigationBar
+          isAuthenticated={registeredUser.isAuthenticated}
+          showOnAuth=""
+          showOnUnauth=""
+          showRightNavBar={false}
+        />
         <LoginForm
           onClick={this.handleOnsubmit}
           message={registeredUser.message}
-          status={registeredUser.status}
+          status={status}
           onChange={this.handleOnInputChange}
           isTyping={isTyping}
           buttonStatus={buttonStatus}

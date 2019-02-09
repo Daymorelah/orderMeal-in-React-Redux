@@ -4,8 +4,13 @@ import NavigationBar from '../../src/Components/navigationBar';
 
 describe('Unit test for the Home page component', () => {
   it('should render the home component to the dom', () => {
-    const wrapper = shallow(<NavigationBar />);
-    expect(wrapper.find('div').is('#logo')).toEqual(true);
-    expect(wrapper.find('div').text()).toEqual('<Link />');
+    const propsObj = {
+      isAuthenticated: true,
+      showOnAuth: 'show auth',
+      showOnUnauth: 'show unauth',
+      showRightNavBar: true
+    };
+    const wrapper = shallow(<NavigationBar {...propsObj} />);
+    expect(wrapper.find('div').length).toEqual(3);
   });
 });

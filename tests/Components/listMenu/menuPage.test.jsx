@@ -14,7 +14,13 @@ describe('Unit test for the MenuPage component', () => {
       prize: 300
     }],
     loadMenu: jest.fn().mockResolvedValue(),
-    menuTypeUnavailable: ''
+    menuTypeUnavailable: '',
+    history: {
+      push: jest.fn(),
+    },
+    placeOrder: jest.fn().mockImplementationOnce(() => Promise
+      .resolve({ code: 201 })),
+    registeredUser: { isAuthenticated: true }
   };
   it('should call componentDidMount when the signup page'
     + 'component is mounted', () => {
@@ -160,5 +166,28 @@ describe('Unit test for the MenuPage component', () => {
     const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
     wrapper.find('#ordered-meal-text #add-order').simulate('click');
     expect(wrapper.find('MenuPage').state('showOrders')).toEqual(true);
+  });
+  it('should send the user back to signup page when user tries '
+    + 'to place an order and is not registered', () => {
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('Button#place-order').simulate('click');
+    expect(wrapper.find('MenuPage').prop('history')
+      .push.mock.calls.length).toBe(1);
+  });
+  it('should place an order when user is registered', () => {
+    sinon.stub(JSON, 'parse')
+      .returns({ username: 'my name', forEach: () => true });
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('Button#place-order').simulate('click');
+    expect(wrapper.find('MenuPage').prop('placeOrder')
+      .mock.calls.length).toBe(1);
+  });
+  it('should show an error message when place order is not successful', () => {
+    propsObj.placeOrder = jest.fn().mockImplementationOnce(() => Promise
+      .resolve({ code: 202 }));
+    const wrapper = mount(<Router><MenuPage {...propsObj} /></Router>);
+    wrapper.find('Button#place-order').simulate('click');
+    expect(wrapper.find('MenuPage').prop('placeOrder')
+      .mock.calls.length).toBe(1);
   });
 });
