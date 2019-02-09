@@ -28,7 +28,6 @@ export class SignupPage extends Component {
   componentDidMount() {
     const { registeredUser, history } = this.props;
     if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
-      this.setState({ isTyping: false });
       history.push('/home');
     }
   }
