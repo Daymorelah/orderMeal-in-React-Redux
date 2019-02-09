@@ -36,7 +36,11 @@ export class SignupPage extends Component {
   handleOnsubmit(event) {
     event.preventDefault();
     const { signupUser, history } = this.props;
-    this.setState({ isTyping: false, status: true, buttonStatus: 'Signing in...' });
+    this.setState({
+      sTyping: false,
+      status: true,
+      buttonStatus: 'Signing in...'
+    });
     const { username, password, email } = this.state;
     signupUser({ username, password, email }, 'signup').then((response) => {
       if (response === undefined) {

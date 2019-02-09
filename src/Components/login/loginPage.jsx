@@ -30,7 +30,11 @@ export class LoginPage extends Component {
   handleOnsubmit = (event) => {
     event.preventDefault();
     const { loginUser, history } = this.props;
-    this.setState({ isTyping: false, status: true, buttonStatus: 'Logging in...' });
+    this.setState({
+      isTyping: false,
+      status: true,
+      buttonStatus: 'Logging in...'
+    });
     const { username, password, email } = this.state;
     loginUser({ username, password, email }, 'login').then((response) => {
       if (response === undefined) {

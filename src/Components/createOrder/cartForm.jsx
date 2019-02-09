@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CartForm = ({
   contactUserStyle, getUsersAddress, getUsersPhoneNumber, address,
-  phoneNumber, addressInLocalStorage, phoneNumberInLocalStorage
+  phoneNumber
 }) => (
   <div id="contact-user" style={contactUserStyle}>
     <p>Where do you want your order sent to?</p>
@@ -11,7 +11,7 @@ const CartForm = ({
       type="text"
       id="address"
       onChange={getUsersAddress}
-      value={address.length ? address : addressInLocalStorage || ''}
+      value={address}
     />
     <p>Phone number</p>
     <input
@@ -19,8 +19,7 @@ const CartForm = ({
       id="phone-number"
       maxLength="13"
       onChange={getUsersPhoneNumber}
-      value={phoneNumber.length
-        ? phoneNumber : phoneNumberInLocalStorage || ''}
+      value={phoneNumber}
     />
   </div>
 );
@@ -31,8 +30,6 @@ CartForm.propTypes = {
   getUsersPhoneNumber: PropTypes.func.isRequired,
   address: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
-  addressInLocalStorage: PropTypes.string.isRequired,
-  phoneNumberInLocalStorage: PropTypes.string.isRequired,
 };
 
 export default CartForm;
