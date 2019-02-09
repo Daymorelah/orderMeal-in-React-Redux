@@ -63,7 +63,12 @@ export class SignupPage extends Component {
     const { isTyping, buttonStatus, status } = this.state;
     return (
       <div>
-        <NavigationBar />
+        <NavigationBar
+          isAuthenticated={registeredUser.isAuthenticated}
+          showOnAuth=""
+          showOnUnauth=""
+          showRightNavBar={false}
+        />
         <SignupForm
           onClick={this.handleOnsubmit}
           message={registeredUser.message}

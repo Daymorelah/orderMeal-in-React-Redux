@@ -6,7 +6,7 @@ import CardContainer from './cardContainer';
 import MenuHeading from './menuHeading';
 import Paginate from '../paginate';
 import SearchMenu from './searchMenu';
-import Header from '../navigationBar';
+import NavigationBar from '../navigationBar';
 import Loading from '../loading';
 import CreateOrder from '../createOrder/createOrder';
 import Footer from '../footer';
@@ -159,14 +159,19 @@ export class MenuPage extends Component {
   }
 
   render() {
-    const { menu, menuTypeUnavailable } = this.props;
+    const { menu, menuTypeUnavailable, registeredUser } = this.props;
     const {
       isRequestSent, showOrders, menuItemSelected, isMealCanceled,
       address, phoneNumber
     } = this.state;
     return (
       <div>
-        <Header />
+        <NavigationBar
+          isAuthenticated={registeredUser.isAuthenticated}
+          showOnAuth="View Profile"
+          showOnUnauth="Login"
+          showRightNavBar
+        />
         <main id="menu-page-container">
           <SearchMenu
             onClick={this.handleFilterBy}
@@ -212,6 +217,7 @@ export class MenuPage extends Component {
 export const mapStateToProps = state => ({
   menu: state.menuReducer.menu,
   menuTypeUnavailable: state.menuReducer.noMenu,
+  registeredUser: state.currentUser,
 });
 
 export const mapDispatchToProps = dispatch => ({
@@ -228,6 +234,7 @@ MenuPage.propTypes = {
   history: PropTypes.oneOfType([
     PropTypes.object, PropTypes.number, PropTypes.string
   ]).isRequired,
+  registeredUser: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuPage);

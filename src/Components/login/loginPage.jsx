@@ -59,7 +59,12 @@ export class LoginPage extends Component {
     const { isTyping, buttonStatus, status } = this.state;
     return (
       <div>
-        <NavigationBar />
+        <NavigationBar
+          isAuthenticated={registeredUser.isAuthenticated}
+          showOnAuth=""
+          showOnUnauth=""
+          showRightNavBar={false}
+        />
         <LoginForm
           onClick={this.handleOnsubmit}
           message={registeredUser.message}

@@ -19,7 +19,8 @@ describe('Unit test for the MenuPage component', () => {
       push: jest.fn(),
     },
     placeOrder: jest.fn().mockImplementationOnce(() => Promise
-      .resolve({ code: 201 }))
+      .resolve({ code: 201 })),
+    registeredUser: { isAuthenticated: true }
   };
   it('should call componentDidMount when the signup page'
     + 'component is mounted', () => {
