@@ -1,27 +1,6 @@
 
 /* Designed for 320px min width */
 
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
-:root {
-  --light: #f0ece2;
-  --dark: #596e79;
-  --primary: #c7b198;
-  --primary-light: #dfd3c3;
-}
-* {
-  box-sizing: border-box;
-}
-html,body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-body {
-  background: var(--light);
-  color: var(--dark);
-  font-family: 'Roboto Condensed', sans-serif;
-}
 h1,p,h3,h2{
   margin: 0;
 }

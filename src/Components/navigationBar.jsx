@@ -18,7 +18,7 @@ const NavigationBar = ({
             isAuthenticated || localStorage.getItem('userDetails')
               ? (
                 <div id="logout">
-                  <Link to="/home">{showOnAuth}</Link>
+                  <Link to="/profile">{showOnAuth}</Link>
                 </div>
               ) : (
                 <div id="logout">

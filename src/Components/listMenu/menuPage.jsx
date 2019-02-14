@@ -150,7 +150,8 @@ export class MenuPage extends Component {
     placeOrder(orderDetails).then((res) => {
       if (res.code === 201) {
         this.setState({ showOrders: false, isMealCanceled: true });
-        return toastrUtil('success', res.message, 3000);
+        toastrUtil('success', res.message, 3000);
+        return history.push('/profile');
       }
       toastrUtil('error', 'Could not place your order. Please try again', 4000);
     }).catch((err) => {
