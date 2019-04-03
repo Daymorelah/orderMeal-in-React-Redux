@@ -34,7 +34,7 @@ export const authUser = (userDetails, authType) => dispatch => axios
     }
   })
   .catch((error) => {
-    if (error.response && error.response.status === 409) {
+    if (error.response && error.response.status < 499) {
       return dispatch(clientError(error.response.data.data));
     }
     if (error.response && error.response.status > 499) {

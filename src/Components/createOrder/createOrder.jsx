@@ -14,8 +14,6 @@ const CreateOrder = ({
   noMealInCartStyle.display = menuItems.length ? 'none' : 'block';
   contactUserStyle.display = menuItems.length ? 'block' : 'none';
   const cancelButtonValue = menuItems.length ? 'Cancel Order' : 'Back to Menu';
-  const addressInLocalStorage = localStorage.getItem('address');
-  const phoneNumberInLocalStorage = localStorage.getItem('phoneNumber');
   return (
     <section id="addOrder-modal-container" style={modalStyle}>
       <div id="modal-container">
@@ -48,8 +46,6 @@ const CreateOrder = ({
               getUsersPhoneNumber={getUsersPhoneNumber}
               address={address}
               phoneNumber={phoneNumber}
-              addressInLocalStorage={addressInLocalStorage}
-              phoneNumberInLocalStorage={phoneNumberInLocalStorage}
             />
             <Button
               id="place-order"

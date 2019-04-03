@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CartForm = ({
   contactUserStyle, getUsersAddress, getUsersPhoneNumber, address,
-  phoneNumber, addressInLocalStorage, phoneNumberInLocalStorage
+  phoneNumber
 }) => (
   <div id="contact-user" style={contactUserStyle}>
     <p>Where do you want your order sent to?</p>

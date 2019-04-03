@@ -4,7 +4,7 @@ import signupReducer from '../../src/reducers/signupReducer';
 describe('Unit test for the signup reducer ', () => {
   it('should return the initial state of the store ', () => {
     const initialState = {
-      userDetails: {}, message: '', isAuthenticated: false, status: ''
+      userDetails: {}, message: '', isAuthenticated: false
     };
     expect(signupReducer(undefined, {})).toEqual(initialState);
   });
@@ -21,7 +21,6 @@ describe('Unit test for the signup reducer ', () => {
         userDetails: userCreated,
         message: userCreated.message,
         isAuthenticated: true,
-        status: true,
       });
   });
   it('should update the store when there is a client error during signup',
@@ -33,7 +32,6 @@ describe('Unit test for the signup reducer ', () => {
       expect(signupReducer({}, signupActionDispatched))
         .toEqual({
           message: 'some client error',
-          status: false,
         });
     });
 });
