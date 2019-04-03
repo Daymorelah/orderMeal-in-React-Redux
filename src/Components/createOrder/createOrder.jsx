@@ -77,8 +77,12 @@ CreateOrder.propTypes = {
   decrementMenuItem: PropTypes.func.isRequired,
   getUsersPhoneNumber: PropTypes.func.isRequired,
   getUsersAddress: PropTypes.func.isRequired,
-  address: PropTypes.string.isRequired,
-  phoneNumber: PropTypes.string.isRequired,
+  address: PropTypes.string,
+  phoneNumber: PropTypes.string,
 };
 
+CreateOrder.defaultProps = {
+  address: '',
+  phoneNumber: '',
+};
 export default CreateOrder;

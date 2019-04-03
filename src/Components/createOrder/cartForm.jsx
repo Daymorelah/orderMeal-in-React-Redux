@@ -11,7 +11,7 @@ const CartForm = ({
       type="text"
       id="address"
       onChange={getUsersAddress}
-      value={address}
+      value={ address ? address : addressInLocalStorage || ''}
     />
     <p>Phone number</p>
     <input
@@ -19,7 +19,8 @@ const CartForm = ({
       id="phone-number"
       maxLength="13"
       onChange={getUsersPhoneNumber}
-      value={phoneNumber}
+      value={phoneNumber
+        ? phoneNumber : phoneNumberInLocalStorage || ''}
     />
   </div>
 );
@@ -28,8 +29,16 @@ CartForm.propTypes = {
   contactUserStyle: PropTypes.objectOf(PropTypes.string).isRequired,
   getUsersAddress: PropTypes.func.isRequired,
   getUsersPhoneNumber: PropTypes.func.isRequired,
-  address: PropTypes.string.isRequired,
-  phoneNumber: PropTypes.string.isRequired,
+  address: PropTypes.string,
+  phoneNumber: PropTypes.string,
+  addressInLocalStorage: PropTypes.string,
+  phoneNumberInLocalStorage: PropTypes.string,
 };
 
+CartForm.defaultProps = {
+  addressInLocalStorage: '',
+  phoneNumberInLocalStorage: '',
+  address: '',
+  phoneNumber: '',
+};
 export default CartForm;
