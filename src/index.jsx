@@ -7,6 +7,7 @@ import App from './Components/app';
 import configuredReduxStore from './store';
 import './style/signupPage.css';
 import './style/menu.css';
+import './style/profilepage.css';
 
 const configuredStore = configuredReduxStore();
 render(

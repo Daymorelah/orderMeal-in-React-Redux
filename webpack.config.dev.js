@@ -4,7 +4,7 @@ import Dotenv from 'dotenv-webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
-  devtool: 'val-source-map',
+  devtool: 'eval-source-map',
   mode: 'development',
   entry: [
     'webpack-hot-middleware/client?reload=true', // note that it reloads the page if hot module reloading fails.
