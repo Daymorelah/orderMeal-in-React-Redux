@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: $light;
+  color: $dark;
+  font-family: $primary-font; 
+}
+
+nav{
+  background: $primary;
+
+  #logo {
+
+    a {
+    text-decoration: none;
+    color: $dark;
+    display: inline-block;
+    border: 2px solid $dark;
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1em;
+    font-weight: 800;
+    }
+  }
+}
+
+button {
+  outline: none;
+  border: none;
+  background: $primary;
+  color: $dark;
+  border-radius: 0.3em;
+  display: block;
+  width: 80%;
+  font-family: $primary-font;
+  height: 1.8em;
+  padding: 0.4em;
+  margin: 0.5em auto;
+  font-size: 1.5em;
+  font-weight: 900;
+  cursor: pointer;
+
+  &:disabled {
+    background: $primary-light;
+    font-size: 1em;
+    font-style: italic;
+  }
+}
+
+#footer {
+  text-align: center;
+  background: $primary;
+  font-size: 1.3em;
+  padding: 0.5em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  
+  p {
+    margin: 0;
+  }
+}
+
+// .error-response {
+//   border: 1px solid $success-response;
+//   color: $success-response;
+// }
+
+// .success-response {
+//   border: 1px solid $success-response;
+//   color: $success-response; 
+// }
+
+// #response-container {
+//   display: none; 
+//   padding: 1em;
+//   text-align: center;
+//   width: 100%;
+//   margin-bottom: 1.8em;
+
+//   p {
+//     margin: 0;
+//     font-size: 1.4em;
+//   }
+// }

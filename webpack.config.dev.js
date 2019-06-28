@@ -7,7 +7,7 @@ export default {
   devtool: 'eval-source-map',
   mode: 'development',
   entry: [
-    'webpack-hot-middleware/client?reload=true', // note that it reloads the page if hot module reloading fails.
+    'webpack-hot-middleware/client?reload=true',
     path.resolve(__dirname, 'src/index.jsx')
   ],
   target: 'web',
@@ -19,7 +19,6 @@ export default {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.EnvironmentPlugin({ 'process.env.NODE_ENV': 'development' }),
     new Dotenv(),
   ],
   module: {
@@ -31,11 +30,8 @@ export default {
         use: 'babel-loader'
       },
       {
-        test: /(\.css)$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' }
-        ],
+        test: /\.(css|scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
     ]
   },

@@ -69,15 +69,26 @@ export class SignupPage extends Component {
           showOnUnauth=""
           showRightNavBar={false}
         />
-        <SignupForm
-          onClick={this.handleOnsubmit}
-          message={registeredUser.message}
-          status={status}
-          onChange={this.handleOnInputChange}
-          isTyping={isTyping}
-          buttonStatus={buttonStatus}
-          {...this.state}
-        />
+        <main>
+          <div id="signup-page-container">
+            <div id="signup-pic-container">
+              <img
+                src={`${process.env.CLOUDINARY_URL}/image/upload/w_0.5,h_0.5/`
+                + 'v1561976366/o-meal/landing_page.svg'}
+                alt="landing_pic"
+              />
+            </div>
+            <SignupForm
+              onClick={this.handleOnsubmit}
+              message={registeredUser.message}
+              status={status}
+              onChange={this.handleOnInputChange}
+              isTyping={isTyping}
+              buttonStatus={buttonStatus}
+              {...this.state}
+            />
+          </div>
+        </main>
         <Footer />
       </div>
     );
