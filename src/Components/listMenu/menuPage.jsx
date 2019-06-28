@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import toastrUtil from '../../utilities/toastrUtil';
 import CardContainer from './cardContainer';
@@ -181,14 +182,24 @@ export class MenuPage extends Component {
             <div className="container">
               <MenuHeading menuItems={menu.length} onClick={this.showOrders} />
               {
-                isRequestSent ? <Loading isRequestSent={isRequestSent} />
+                isRequestSent ? <Loading isRequestSent={isRequestSent} /> //eslint-disable-line
                   : (
-                    <CardContainer
-                      menu={menu}
-                      menuTypeUnavailable={menuTypeUnavailable}
-                      onClick={this.handleMealCardOnclick}
-                      isMealCanceled={isMealCanceled}
-                    />
+                    menu.length ? (
+                      <CardContainer
+                        menu={menu}
+                        menuTypeUnavailable={menuTypeUnavailable}
+                        onClick={this.handleMealCardOnclick}
+                        isMealCanceled={isMealCanceled}
+                      />
+                    ) : (
+                      <div id="no-menu">
+                        <h3>There are no meals available yet.</h3>
+                        <p>
+                          You can check back soon or go to your
+                          <Link to="./home">Profile Page</Link>
+                        </p>
+                      </div>
+                    )
                   )
               }
             </div>

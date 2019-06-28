@@ -12,9 +12,12 @@ const compiler = webpack(config);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
+    noInfo: false,
     publicPath: config.output.publicPath,
     hot: true,
+    stats: {
+      colors: true
+    }
   }));
   app.use(webpackHotMiddleware(compiler));
 }
