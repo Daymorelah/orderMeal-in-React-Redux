@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -15,11 +16,7 @@ module.exports = {
     new htmlWebpackPlugin({
       template: './index.prod.html',
     }),
-    new webpack.EnvironmentPlugin({ 'process.env.NODE_ENV': 'production' }),
-    new webpack.DefinePlugin({
-      'process.env.PRODUCTION_URL': JSON
-        .stringify('https://ordermymeal.herokuapp.com'),
-    }),
+    new webpack.EnvironmentPlugin(['CLOUDINARY_URL', 'PRODUCTION_URL']),
   ],
   module: {
     rules: [
@@ -30,11 +27,8 @@ module.exports = {
         use: 'babel-loader'
       },
       {
-        test: /(\.css)$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' }
-        ],
+        test: /\.(css|scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
     ]
   },

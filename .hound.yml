@@ -1,8 +1,13 @@
 eslint:
- enabled: true
- config_file: .eslintrc.json
+  enabled: true
+  config_file: .eslintrc.json
+  ignore_file: .eslintignore
 
 markdown:
- enabled: true
+  enabled: true
 
-fail_on_violations: false
+scss:
+  enabled: false
+
+jshint:
+  enabled: false
