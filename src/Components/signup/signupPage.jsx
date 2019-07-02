@@ -6,51 +6,51 @@ import NavigationBar from '../navigationBar';
 import SignupForm from './signupForm';
 import Footer from '../footer';
 import * as authActions from '../../actions/authActions';
+import * as actionTypes from '../../actions/actionTypes';
 
 export class SignupPage extends Component {
-  constructor(props) {
-    super(props);
-    this.initialState = {
-      username: '',
-      password: '',
-      email: '',
-    };
-    this.state = {
-      isTyping: false,
-      buttonStatus: 'Signup',
-      status: '',
-      ...this.initialState,
-    };
-    this.handleOnsubmit = this.handleOnsubmit.bind(this);
-    this.handleOnInputChange = this.handleOnInputChange.bind(this);
-  }
+  static initialState = {
+    username: '',
+    password: '',
+    email: '',
+  };
+
+  state = {
+    isTyping: false,
+    buttonStatus: 'Signup',
+    status: '',
+    ...SignupPage.initialState,
+  };
 
   componentDidMount() {
     const { registeredUser, history } = this.props;
-    if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
+    if (registeredUser.isAuthenticated
+      || localStorage.getItem(process.env.IS_AUTHENTICATED)) {
       history.push('/menu');
     }
   }
 
-  handleOnsubmit(event) {
+  handleOnsubmit = async (event) => {
     event.preventDefault();
-    const { signupUser, history } = this.props;
     this.setState({
-      sTyping: false,
+      isTyping: false,
       status: true,
       buttonStatus: 'Signing in...'
     });
+    const { signupUser, history } = this.props;
     const { username, password, email } = this.state;
-    signupUser({ username, password, email }, 'signup').then((response) => {
-      if (response === undefined) {
-        toastr('success', 'yay!', 3000);
-        return history.push('/menu');
-      }
-      this.setState({ buttonStatus: 'Signup', status: false });
-    });
+    const response = await signupUser({ username, password, email }, 'signup');
+    if (response.type === actionTypes.AUTH_USER_SUCCESS) {
+      toastr('success', `${username} signed up successfully`, 3000);
+      return history.push('/menu');
+    }
+    if (response.type === actionTypes.CLIENT_ERROR) {
+      toastr('error', response.message);
+      return this.setState({ buttonStatus: 'Signup', status: false });
+    }
   }
 
-  handleOnInputChange(event) {
+  handleOnInputChange = (event) => {
     this.setState({
       isTyping: true,
       buttonStatus: 'Signup',

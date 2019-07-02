@@ -8,32 +8,42 @@ export const noInternet = () => ({
   type: actionTypes.NO_INTERNET,
   message: 'Could not connect to the internet. Please check your connection.'
 });
+
 export const serverError = () => ({
   type: actionTypes.SERVER_ERROR,
   message: 'Internal server error. Please try again',
 });
+
 export const clientError = response => ({
   type: actionTypes.CLIENT_ERROR,
   message: response.message,
 });
+
 export const generalError = () => ({
   type: actionTypes.GENERAL_ERROR,
   message: 'Something awful happened. We will fix this soon.'
 });
+
 export const signupUserSuccess = userCreated => ({
   type: actionTypes.AUTH_USER_SUCCESS,
   userCreated,
 });
 
+/**
+ * This method gets called when the signup or login button gets clicked.
+ * @param {object} userDetails - contains details of the
+ * user needed for authenticating
+ * @param {string} authType - specifies the auth type i.e. login or signup
+ */
 export const authUser = (userDetails, authType) => dispatch => axios
   .post(`${domain}/api/v1/auth/${authType}`, userDetails)
   .then((response) => {
     if (response.status === 201 || response.status === 200) {
-      localStorage.setItem('userDetails', JSON.stringify(response.data.data));
-      dispatch(signupUserSuccess(response.data.data));
+      localStorage.setItem(process.env.IS_AUTHENTICATED, JSON
+        .stringify(response.data.data));
+      return dispatch(signupUserSuccess(response.data.data));
     }
-  })
-  .catch((error) => {
+  }).catch((error) => {
     if (error.response && error.response.status < 499) {
       return dispatch(clientError(error.response.data.data));
     }

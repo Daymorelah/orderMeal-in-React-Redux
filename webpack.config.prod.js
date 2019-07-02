@@ -16,7 +16,9 @@ module.exports = {
     new htmlWebpackPlugin({
       template: './index.prod.html',
     }),
-    new webpack.EnvironmentPlugin(['CLOUDINARY_URL', 'PRODUCTION_URL']),
+    new webpack.EnvironmentPlugin([
+      'CLOUDINARY_URL', 'PRODUCTION_URL', 'IS_AUTHENTICATED'
+    ]),
   ],
   module: {
     rules: [

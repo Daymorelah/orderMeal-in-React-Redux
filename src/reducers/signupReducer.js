@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 export default (
   state = {
-    userDetails: {}, message: '', isAuthenticated: false
+    userDetails: {}, message: '', isAuthenticated: false, errorMessage: ''
   },
   action
 ) => {
@@ -20,7 +20,7 @@ export default (
     case actionTypes.GENERAL_ERROR:
       return {
         ...state,
-        message: action.message,
+        errorMessage: action.message,
       };
     default:
       return state;
