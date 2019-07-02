@@ -5,9 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './Components/app';
 import configuredReduxStore from './store';
-import './style/signupPage.css';
-import './style/menu.css';
-import './style/profilepage.css';
+import './style/main.scss';
 
 const configuredStore = configuredReduxStore();
 render(
