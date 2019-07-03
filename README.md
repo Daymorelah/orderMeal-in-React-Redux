@@ -7,13 +7,13 @@
 OrderMeal is a food delivery service app for a restaurant. This repo implements the front-end version of the app using React/Redux.
 
 ## Screenshot
+<img src='./readMe_image.png'>
 
-Features:
+## Features:
 - User can signup/register on the application
 - Users can login to the app
 
-### TECHNOLOGIES
-#### Client-Side
+## TECHNOLOGIES
 The front-end was implemented using:
 * [HTML](https://www.w3schools.com/Html/) A standard markup language for creating Web pages
 * [CSS](https://www.w3schools.com/css/css_intro.asp) This describes how HTML elements are to be displayed on screen.
