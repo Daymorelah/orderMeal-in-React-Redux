@@ -6,6 +6,8 @@
 # orderMeal-in-React-Redux
 OrderMeal is a food delivery service app for a restaurant. This repo implements the front-end version of the app using React/Redux.
 
+## Screenshot
+
 Features:
 - User can signup/register on the application
 - Users can login to the app
@@ -22,16 +24,16 @@ The front-end was implemented using:
  * install [Node js](https://nodejs.org/en/)
  * Clone the repository `git clone https://github.com/Daymorelah/orderMeal-in-React.git` 
  * `CD` into the project directory
- * Run `npm install` to install dependencies
- * Run `npm start` to get the app started on your local machine.
+ * Run `yarn install` to install dependencies
+ * Run `yarn start` to get the app started on your local machine.
+ * type `http://localhost:3000/signup` into your browser URL.
  
 ## TESTING
-#### Server side:
 To run tests:
 * `CD` into the project directory
-* Run `npm run test` to run tests on the app
+* Run `yarn test` to run tests on the app
 
-##### To view the app on Heroku click [here](https://omeal.herokuapp.com/)
+#### To view the app on Heroku click [here](https://omeal.herokuapp.com/singup)
 
 ## Contributing
 * Fork this repository
