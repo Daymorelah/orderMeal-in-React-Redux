@@ -4,7 +4,7 @@ import signupReducer from '../../src/reducers/signupReducer';
 describe('Unit test for the signup reducer ', () => {
   it('should return the initial state of the store ', () => {
     const initialState = {
-      userDetails: {}, message: '', isAuthenticated: false
+      userDetails: {}, message: '', isAuthenticated: false, errorMessage: ''
     };
     expect(signupReducer(undefined, {})).toEqual(initialState);
   });
@@ -31,7 +31,7 @@ describe('Unit test for the signup reducer ', () => {
       };
       expect(signupReducer({}, signupActionDispatched))
         .toEqual({
-          message: 'some client error',
+          errorMessage: 'some client error',
         });
     });
 });

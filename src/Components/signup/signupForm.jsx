@@ -2,22 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FormInput from '../formInput';
-import AuthStatus from '../authStatus';
 import AuthButton from '../authButton';
 
 const SignupForm = ({
-  onClick, message, status, onChange, isTyping, buttonStatus,
-  username, email, password
+  onClick, onChange, buttonStatus, username, email, password
 }) => (
   <div id="signup-form-container">
     <div id="signup-header-text">
       <h1>Welcome to the O-meal App.</h1>
     </div>
-    <AuthStatus
-      statusMessage={message}
-      status={status}
-      isTyping={isTyping}
-    />
     <div id="signup-form">
       <h2>please signup</h2>
       <form>
@@ -62,10 +55,7 @@ const SignupForm = ({
 
 SignupForm.propTypes = {
   onClick: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
-  status: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   onChange: PropTypes.func.isRequired,
-  isTyping: PropTypes.bool.isRequired,
   buttonStatus: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,

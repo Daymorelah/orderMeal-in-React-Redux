@@ -148,7 +148,7 @@ describe('Unit tests for the signup actions', () => {
       sinon.stub(axios, 'post').rejects();
       const expectedAction = [
         {
-          ype: actionTypes.GENERAL_ERROR,
+          type: actionTypes.GENERAL_ERROR,
           message: 'Something awful happened. We will fix this soon.'
         }
       ];

@@ -56,6 +56,11 @@
   }
 }
 
+.toast-close-button{
+  width: 20%;
+  margin: 0 auto;
+}
+
 .error-response {
   border: 1px solid $success-response;
   color: $success-response;

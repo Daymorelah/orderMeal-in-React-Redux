@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import sinon from 'sinon';
-import * as authActions from '../../../src/actions/authActions';
+import * as toast from '../../../src/utilities/toastrUtil';
+import * as actionTypes from '../../../src/actions/actionTypes';
 import { SignupPage, mapStateToProps, mapDispatchToProps } from
   '../../../src/Components/signup/signupPage';
 
@@ -11,17 +12,19 @@ describe('Unit test for the signup page', () => {
     registeredUser: {
       message: 'some message',
       status: 'some status',
+      isAuthenticated: false,
     },
     signupUser: () => {},
     history: {
       path: ''
     }
   };
-  it('should call componentDidMount when the signup page'
+  it('should call componentDidMount when the signup page '
     + 'component is mounted', () => {
-    const spiedMethod = sinon.spy(SignupPage.prototype, 'componentDidMount');
+    jest.spyOn(SignupPage.prototype, 'componentDidMount')
+      .mockReturnValueOnce(true);
     shallow(<SignupPage {...propsObj} />);
-    expect(spiedMethod.calledOnce).toEqual(true);
+    expect(SignupPage.prototype.componentDidMount.mock.calls.length).toEqual(1);
   });
   it('should map correct state to prop', () => {
     const appState = { currentUser: {} };
@@ -49,10 +52,10 @@ describe('Unit test for the signup page', () => {
     expect(wrapper.find(SignupPage).state('username')).toEqual('myName');
   });
   it('should send a post request when the submit button is clicked', () => {
-    propsObj.signupUser = sinon
-      .stub(authActions, 'authUser').resolves(undefined);
-    propsObj.history.push = () => {};
-    const mockPushMethod = sinon.spy(propsObj.history, 'push');
+    propsObj.signupUser = jest.fn().mockReturnValueOnce({
+      type: actionTypes.AUTH_USER_SUCCESS
+    });
+    // jest.spyOn(toast, 'default').mockReturnValueOnce(true);
     const wrapper = mount(<Router><SignupPage {...propsObj} /></Router>);
     const signupButton = wrapper.find('button#signup-button');
     expect(signupButton.prop('type')).toEqual('submit');
@@ -60,8 +63,19 @@ describe('Unit test for the signup page', () => {
     expect(wrapper.find(SignupPage).state('isTyping')).toEqual(false);
     expect(wrapper.find(SignupPage).state('buttonStatus'))
       .toEqual('Signing in...');
-    expect(mockPushMethod.called).toEqual(false);
-    propsObj.signupUser.restore();
+  });
+  it('should send a post request when the submit button is clicked', () => {
+    propsObj.signupUser = jest.fn().mockReturnValueOnce({
+      type: actionTypes.CLIENT_ERROR,
+      message: 'some error message',
+    });
+    jest.spyOn(toast, 'default').mockReturnValueOnce(true);
+    const wrapper = mount(<Router><SignupPage {...propsObj} /></Router>);
+    const signupButton = wrapper.find('button#signup-button');
+    expect(signupButton.prop('type')).toEqual('submit');
+    signupButton.simulate('click');
+    wrapper.update(); wrapper.update();
+    expect(wrapper.find(SignupPage).state('isTyping')).toEqual(false);
   });
   it('should redirect to the home page when a user is authenticated', () => {
     propsObj.history.push = () => {};
