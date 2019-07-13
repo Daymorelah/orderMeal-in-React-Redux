@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
-import sinon from 'sinon';
 import * as toast from '../../../src/utilities/toastrUtil';
 import * as actionTypes from '../../../src/actions/actionTypes';
 import { SignupPage, mapStateToProps, mapDispatchToProps } from

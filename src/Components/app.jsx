@@ -9,6 +9,7 @@ import MenuPage from './listMenu/menuPage';
 const App = () => (
   <div>
     <Switch>
+      <Route exact path="/" component={SignupPage} />
       <Route exact path="/about" component={AboutPage} />
       <Route exact path="/home" component={HomePage} />
       <Route exact path="/signup" component={SignupPage} />
