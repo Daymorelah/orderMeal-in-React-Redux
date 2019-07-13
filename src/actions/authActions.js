@@ -24,10 +24,24 @@ export const generalError = () => ({
   message: 'Something awful happened. We will fix this soon.'
 });
 
-export const signupUserSuccess = userCreated => ({
+export const signupUserSuccess = successMessage => ({
   type: actionTypes.AUTH_USER_SUCCESS,
-  userCreated,
+  message: successMessage,
 });
+
+/**
+ * This method gets called when the signup button gets clicked.
+ * @param {object} userDetails - contains details of the
+ * user needed for authenticating
+ * @param {string} authType - specifies the auth type i.e. login or signup
+ */
+export const initialSignupProcess = (userDetails, authType) => () => axios
+  .post(`${domain}/api/v1/auth/${authType}`, userDetails)
+  .then(response => response.data)
+  .catch((error) => {
+    throw ((error.response && error.response.data)
+      || 'Our servers are down. Please try again later.');
+  });
 
 /**
  * This method gets called when the signup or login button gets clicked.
@@ -38,20 +52,23 @@ export const signupUserSuccess = userCreated => ({
 export const authUser = (userDetails, authType) => dispatch => axios
   .post(`${domain}/api/v1/auth/${authType}`, userDetails)
   .then((response) => {
-    if (response.status === 201 || response.status === 200) {
-      localStorage.setItem(process.env.IS_AUTHENTICATED, JSON
-        .stringify(response.data.data));
-      return dispatch(signupUserSuccess(response.data.data));
+    if (response.data.success) {
+      dispatch(signupUserSuccess(response.data.message));
+      return true;
     }
   }).catch((error) => {
     if (error.response && error.response.status < 499) {
-      return dispatch(clientError(error.response.data.data));
+      dispatch(clientError(error.response.data.data));
+      return false;
     }
     if (error.response && error.response.status > 499) {
-      return dispatch(serverError());
+      dispatch(serverError());
+      return false;
     }
     if (error.message === 'Network Error') {
-      return dispatch(noInternet());
+      dispatch(noInternet());
+      return false;
     }
-    return dispatch(generalError());
+    dispatch(generalError());
+    return false;
   });

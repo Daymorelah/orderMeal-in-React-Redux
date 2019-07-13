@@ -5,15 +5,14 @@ import toastr from 'toastr';
  * @param {string} type - Type of toastr message to display
  * e.g. success, error, warning, e.t.c
  * @param {string} message - The message to be displayed by toastr.
- * @param {number} time - Duration we want the toaster to show
  */
-const toastrUtil = (type, message, time) => {
+const toastrUtil = (type, message) => {
   const options = {
-    closeButton: true, preventDuplicates: true, timeOut: 0,
+    closeButton: true, preventDuplicates: true, extendedTimeOut: 3, timeOut: 0,
   };
   if (type === 'success') {
-    toastr.options.progressBar = true;
-    return toastr[type](message, { timeOut: time });
+    toastr.options = { ...options };
+    return toastr[type](message);
   }
   if (type === 'error') {
     toastr.options = { ...options };

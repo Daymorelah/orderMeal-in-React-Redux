@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FormInput = ({
-  onChange, placeHolder, id, type, value
+  onChange, placeHolder, id, type, value, readOnly,
 }) => (
   <input
     type={type}
@@ -10,7 +10,7 @@ const FormInput = ({
     onChange={onChange}
     value={value}
     placeholder={placeHolder}
-    required
+    readOnly={readOnly}
   />
 );
 
@@ -19,7 +19,8 @@ FormInput.propTypes = {
   placeHolder: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default FormInput;

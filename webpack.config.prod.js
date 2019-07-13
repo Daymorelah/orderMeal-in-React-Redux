@@ -17,7 +17,8 @@ module.exports = {
       template: './index.prod.html',
     }),
     new webpack.EnvironmentPlugin([
-      'CLOUDINARY_URL', 'PRODUCTION_URL', 'IS_AUTHENTICATED'
+      'CLOUDINARY_URL', 'PRODUCTION_URL', 'IS_AUTHENTICATED',
+      'SOCIAL_AUTH_URL', 'SOCIAL_AUTH_SECRET'
     ]),
   ],
   module: {
