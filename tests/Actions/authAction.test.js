@@ -20,7 +20,7 @@ describe('Unit tests for the signup actions', () => {
     it('should return the user created on successful signup', () => {
       const expectedAction = {
         type: actionTypes.AUTH_USER_SUCCESS,
-        userCreated,
+        message: userCreated,
       };
       expect(authAction.signupUserSuccess(userCreated))
         .toEqual(expectedAction);
@@ -79,11 +79,9 @@ describe('Unit tests for the signup actions', () => {
     it('should dispatch the appropriate action when '
       + 'a post request to signup a user is successful', () => {
       sinon.stub(axios, 'post').resolves(response);
-      const expectedAction = [
-        { type: actionTypes.AUTH_USER_SUCCESS, userCreated, }
-      ];
-      return store.dispatch(authAction.authUser(userDetails)).then(() => {
-        expect(store.getActions()).toEqual(expectedAction);
+      return store.dispatch(authAction
+        .authUser(userDetails, 'signup')).then(() => {
+        expect(store.getActions()).toEqual([]);
       });
     });
     it('should dispatch the appropriate action when '

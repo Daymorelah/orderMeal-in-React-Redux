@@ -5,8 +5,8 @@ import toastr from '../../utilities/toastrUtil';
 import NavigationBar from '../navigationBar';
 import SignupForm from './signupForm';
 import Footer from '../footer';
+import getPayload from '../../utilities/decodeJwt';
 import * as authActions from '../../actions/authActions';
-import * as actionTypes from '../../actions/actionTypes';
 
 export class SignupPage extends Component {
   static initialState = {
@@ -16,43 +16,66 @@ export class SignupPage extends Component {
   };
 
   state = {
-    isTyping: false,
     buttonStatus: 'Signup',
-    status: '',
+    makeInputsReadOnly: false,
     ...SignupPage.initialState,
   };
 
-  componentDidMount() {
-    const { registeredUser, history } = this.props;
+  async componentDidMount() {
+    const { registeredUser, history, location: { search } } = this.props;
     if (registeredUser.isAuthenticated
       || localStorage.getItem(process.env.IS_AUTHENTICATED)) {
-      history.push('/menu');
+      return history.push('/menu');
+    }
+    this.showMessage(search);
+  }
+
+  showMessage = (search) => {
+    const params = new URLSearchParams(search);
+    const status = params.has('stat') ? params.get('stat') : null;
+    if (status !== null) {
+      try {
+        const payload = getPayload(status);
+        if (payload.success) return toastr('success', payload.message);
+        if (!payload.success && payload.message) {
+          return toastr('error', payload.message);
+        }
+      } catch (err) { return false; }
     }
   }
 
   handleOnsubmit = async (event) => {
     event.preventDefault();
     this.setState({
-      isTyping: false,
-      status: true,
+      makeInputsReadOnly: true,
       buttonStatus: 'Signing in...'
     });
-    const { signupUser, history } = this.props;
+    const { signupUser } = this.props;
     const { username, password, email } = this.state;
-    const response = await signupUser({ username, password, email }, 'signup');
-    if (response.type === actionTypes.AUTH_USER_SUCCESS) {
-      toastr('success', `${username} signed up successfully`, 3000);
-      return history.push('/menu');
-    }
-    if (response.type === actionTypes.CLIENT_ERROR) {
-      toastr('error', response.message);
-      return this.setState({ buttonStatus: 'Signup', status: false });
+    try {
+      const response = await signupUser({
+        username, password, email,
+      }, 'signup');
+      if (response.success) {
+        toastr('success', response.message);
+        return this.setState({
+          ...SignupPage.initialState,
+          buttonStatus: 'Signup',
+          makeInputsReadOnly: false,
+        });
+      }
+    } catch (err) {
+      toastr('error', err.message || err);
+      return this.setState({
+        buttonStatus: 'Signup',
+        makeInputsReadOnly: false,
+        ...SignupPage.initialState
+      });
     }
   }
 
   handleOnInputChange = (event) => {
     this.setState({
-      isTyping: true,
       buttonStatus: 'Signup',
       [event.target.id]: event.target.value
     });
@@ -60,7 +83,7 @@ export class SignupPage extends Component {
 
   render() {
     const { registeredUser } = this.props;
-    const { isTyping, buttonStatus, status } = this.state;
+    const { makeInputsReadOnly, buttonStatus, status } = this.state;
     return (
       <div>
         <NavigationBar
@@ -82,8 +105,8 @@ export class SignupPage extends Component {
               onClick={this.handleOnsubmit}
               message={registeredUser.message}
               status={status}
+              makeInputsReadOnly={makeInputsReadOnly}
               onChange={this.handleOnInputChange}
-              isTyping={isTyping}
               buttonStatus={buttonStatus}
               {...this.state}
             />
@@ -98,9 +121,12 @@ export class SignupPage extends Component {
 SignupPage.propTypes = {
   registeredUser: PropTypes.objectOf(PropTypes.any).isRequired,
   signupUser: PropTypes.func.isRequired,
-  history: PropTypes.oneOfType([
-    PropTypes.object, PropTypes.number, PropTypes.string
-  ]).isRequired,
+  history: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.number, PropTypes.string, PropTypes.func, PropTypes.object
+  ])).isRequired,
+  location: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.object
+  ])).isRequired,
 };
 
 export const mapStateToProps = state => ({
@@ -109,7 +135,7 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   signupUser: (userDetails, authType) => dispatch(authActions
-    .authUser(userDetails, authType))
+    .initialSignupProcess(userDetails, authType)),
 });
 
 

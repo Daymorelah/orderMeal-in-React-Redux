@@ -1,11 +1,15 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import FormInput from '../formInput';
 import AuthButton from '../authButton';
 
 const SignupForm = ({
-  onClick, onChange, buttonStatus, username, email, password
+  onClick, onChange, buttonStatus, username,
+  email, password, makeInputsReadOnly
 }) => (
   <div id="signup-form-container">
     <div id="signup-header-text">
@@ -20,7 +24,7 @@ const SignupForm = ({
           placeHolder="username"
           value={username}
           onChange={onChange}
-          required
+          readOnly={makeInputsReadOnly}
         />
         <FormInput
           type="password"
@@ -28,7 +32,7 @@ const SignupForm = ({
           placeHolder="password"
           value={password}
           onChange={onChange}
-          required
+          readOnly={makeInputsReadOnly}
         />
         <FormInput
           type="email"
@@ -36,7 +40,7 @@ const SignupForm = ({
           placeHolder="email"
           value={email}
           onChange={onChange}
-          required
+          readOnly={makeInputsReadOnly}
         />
         <AuthButton
           buttonStatus={buttonStatus}
@@ -49,6 +53,18 @@ const SignupForm = ({
           <Link to="/login">Login</Link>
         </h3>
       </form>
+      <div id="social-auth-container">
+        <p> -------- or signup with -------- </p>
+        <ul id="google-button">
+          <li>
+            <a
+              href={`${process.env.SOCIAL_AUTH_URL}/google`}
+            >
+              <FontAwesomeIcon icon={faGoogle} />
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 );
@@ -60,6 +76,7 @@ SignupForm.propTypes = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  makeInputsReadOnly: PropTypes.bool.isRequired,
 };
 
 export default SignupForm;

@@ -55,12 +55,10 @@ describe('Unit test for the signup page', () => {
     propsObj.signupUser = jest.fn().mockReturnValueOnce({
       type: actionTypes.AUTH_USER_SUCCESS
     });
-    // jest.spyOn(toast, 'default').mockReturnValueOnce(true);
     const wrapper = mount(<Router><SignupPage {...propsObj} /></Router>);
     const signupButton = wrapper.find('button#signup-button');
     expect(signupButton.prop('type')).toEqual('submit');
     signupButton.simulate('click');
-    expect(wrapper.find(SignupPage).state('isTyping')).toEqual(false);
     expect(wrapper.find(SignupPage).state('buttonStatus'))
       .toEqual('Signing in...');
   });
@@ -75,13 +73,5 @@ describe('Unit test for the signup page', () => {
     expect(signupButton.prop('type')).toEqual('submit');
     signupButton.simulate('click');
     wrapper.update(); wrapper.update();
-    expect(wrapper.find(SignupPage).state('isTyping')).toEqual(false);
-  });
-  it('should redirect to the home page when a user is authenticated', () => {
-    propsObj.history.push = () => {};
-    const mockPushMethod = sinon.spy(propsObj.history, 'push');
-    propsObj.registeredUser.isAuthenticated = true;
-    mount(<Router><SignupPage {...propsObj} /></Router>);
-    expect(mockPushMethod.calledOnce).toEqual(true);
   });
 });
