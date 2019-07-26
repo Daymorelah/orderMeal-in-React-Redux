@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 /**
    * Function to attach token to header
