@@ -32,7 +32,7 @@ describe('Unit test for the CreateOrder component', () => {
     const wrapper = shallow(<CreateOrder {...propsObj} />);
     expect(wrapper.find('Button').length).toEqual(2);
     expect(wrapper.find('p').at(1).text()).toBe('You have not selected any '
-    + 'meals to order yet. Click the cancel button to '
+    + 'meals to order yet. Click the "Back To Menu" button to '
     + 'go back and select a meal.');
     expect(wrapper.find('CartForm').length).toEqual(1);
   });

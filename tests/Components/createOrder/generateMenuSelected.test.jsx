@@ -20,7 +20,7 @@ describe('Unit test for GenerateMenuSelected component', () => {
     const wrapper = shallow(<GenerateMenuSelected {...propsObj} />);
     expect(wrapper.find('span').length).toEqual(4);
     expect(wrapper.find('span').at(1).text()).toEqual('3');
-    expect(wrapper.find('p').last().text()).toEqual('Prize: ₦600');
+    expect(wrapper.find('p').last().text()).toEqual('Total: ₦600');
   });
   it('should call incrementMenu function when the plus'
     + ' icon is clicked', () => {

@@ -37,7 +37,7 @@ const CreateOrder = ({
             <div id="no-meal-in-cart" style={noMealInCartStyle}>
               <p>
                 You have not selected any meals to order yet. Click the
-                cancel button to go back and select a meal.
+                &quot;Back To Menu&quot; button to go back and select a meal.
               </p>
             </div>
             <CartForm

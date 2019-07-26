@@ -11,10 +11,6 @@ const Card = ({
     <div className="meal-cards">
       <div className="card-heading">
         <img src={photo} alt={`menu-${mealType}`} />
-        {/* <h2>
-          <span className="meal-property">type: </span>
-          {mealType}
-        </h2> */}
       </div>
       <div className="card-body">
         <p>
