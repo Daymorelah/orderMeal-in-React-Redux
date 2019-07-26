@@ -16,9 +16,11 @@ body {
 
 nav{
   background: $primary;
+  #nav-menu {
+    display: block;
+  }
 
   #logo {
-
     a {
     text-decoration: none;
     color: $dark;
@@ -55,6 +57,14 @@ button {
   }
 }
 
+h1,p,h3,h2{
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
 #footer {
   text-align: center;
   background: $primary;
@@ -64,31 +74,32 @@ button {
   bottom: 0;
   left: 0;
   width: 100%;
-  
+  color: $dark;
+
   p {
     margin: 0;
   }
 }
 
-// .error-response {
-//   border: 1px solid $success-response;
-//   color: $success-response;
-// }
-
-// .success-response {
-//   border: 1px solid $success-response;
-//   color: $success-response; 
-// }
-
-// #response-container {
-//   display: none; 
-//   padding: 1em;
-//   text-align: center;
-//   width: 100%;
-//   margin-bottom: 1.8em;
-
-//   p {
-//     margin: 0;
-//     font-size: 1.4em;
-//   }
-// }
+/* paginate */
+#paginate {
+  text-align: center;
+  margin: 2em 0;
+  display: flex;
+  justify-content: center;
+  
+  .page {
+    display: inline-block;
+    font-size: 1em;
+    padding: 0.3em;
+    width: 1.8em;
+    margin-right: 2%;
+    background: $dark;
+    color: $primary-light;
+    border-radius: 50%;
+  }
+  
+  a {
+    color: $primary-light;
+  }
+}

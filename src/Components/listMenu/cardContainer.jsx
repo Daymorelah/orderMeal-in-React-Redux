@@ -31,6 +31,7 @@ const CardContainer = ({
             prize={menuItem.prize}
             onClick={event => onClick(event, menuItem)}
             isMealCanceled={isMealCanceled}
+            photo={menuItem.menu_photo}
           />
         ))
       )

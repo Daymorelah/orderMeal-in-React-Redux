@@ -149,6 +149,11 @@ nav{
   display: flex;
   justify-content: space-between;
 }
+.card-heading img {
+  height: 140px;
+    margin: auto;
+    display: block;
+}
 .card-heading-icon {
   align-self: center;
 }

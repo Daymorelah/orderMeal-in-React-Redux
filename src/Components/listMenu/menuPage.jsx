@@ -179,32 +179,32 @@ export class MenuPage extends Component {
             onChange={this.handleSelectOption}
           />
           <section id="ordered-meals-container">
-            <div className="container">
+            <div className="menu_page-container">
               <MenuHeading menuItems={menu.length} onClick={this.showOrders} />
               {
-                isRequestSent ? <Loading isRequestSent={isRequestSent} /> //eslint-disable-line
-                  : (
-                    menu.length ? (
-                      <CardContainer
-                        menu={menu}
-                        menuTypeUnavailable={menuTypeUnavailable}
-                        onClick={this.handleMealCardOnclick}
-                        isMealCanceled={isMealCanceled}
-                      />
-                    ) : (
-                      <div id="no-menu">
-                        <h3>There are no meals available yet.</h3>
-                        <p>
-                          You can check back soon or go to your
-                          <Link to="./home">Profile Page</Link>
-                        </p>
-                      </div>
-                    )
-                  )
+                isRequestSent ? <Loading isRequestSent={isRequestSent} /> : null
+              }
+              {
+                menu.length ? (
+                  <CardContainer
+                    menu={menu}
+                    menuTypeUnavailable={menuTypeUnavailable}
+                    onClick={this.handleMealCardOnclick}
+                    isMealCanceled={isMealCanceled}
+                  />
+                ) : (
+                  <div id="no-menu">
+                    <h3>There are no meals available yet.</h3>
+                    <p>
+                      You can check back soon or go to your
+                      <Link to="./home">Profile Page</Link>
+                    </p>
+                  </div>
+                )
               }
             </div>
           </section>
-          <Paginate />
+          { menu.length ? <Paginate /> : null }
           <CreateOrder
             showOrders={showOrders}
             menuItems={menuItemSelected}

@@ -23,10 +23,11 @@ export const loadMenu = filterBy => (dispatch) => {
     URL = `${domain}/api/v1/menu`;
   }
   return axios.get(URL).then((response) => {
-    if (!response.data.data.menu) {
+    if (!response.data.menu) {
       return dispatch(noMenuTypeYet(filterBy));
     }
-    return dispatch(loadMenuSuccess(response.data.data));
+    console.log('2 response.data is ===> ', response.data);
+    return dispatch(loadMenuSuccess(response.data));
   })
     .catch(error => error);
 };
