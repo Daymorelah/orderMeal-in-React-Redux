@@ -26,7 +26,6 @@ export const loadMenu = filterBy => (dispatch) => {
     if (!response.data.menu) {
       return dispatch(noMenuTypeYet(filterBy));
     }
-    console.log('2 response.data is ===> ', response.data);
     return dispatch(loadMenuSuccess(response.data));
   })
     .catch(error => error);

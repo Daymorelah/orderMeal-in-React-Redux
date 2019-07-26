@@ -188,18 +188,21 @@ export class MenuPage extends Component {
                 menu.length ? (
                   <CardContainer
                     menu={menu}
-                    menuTypeUnavailable={menuTypeUnavailable}
                     onClick={this.handleMealCardOnclick}
                     isMealCanceled={isMealCanceled}
                   />
-                ) : (
-                  <div id="no-menu">
-                    <h3>There are no meals available yet.</h3>
-                    <p>
-                      You can check back soon or go to your
-                      <Link to="./home">Profile Page</Link>
-                    </p>
-                  </div>
+                ) : (!isRequestSent && (
+                <div id="no-menu">
+                  <h3>
+                    {`There are no ${menuTypeUnavailable.toLowerCase()
+                      || 'meals'} available yet.`}
+                  </h3>
+                  <p>
+                    You can check back soon or go to your
+                    <Link to="./home">Profile Page</Link>
+                  </p>
+                </div>
+                )
                 )
               }
             </div>

@@ -102,7 +102,7 @@ nav{
       width: 90%;
 
       #ordered-meal-text {
-        width: 95%;
+        width: 90%;
         margin: auto;
         margin-top: 1em;
         padding: 1em 0;
@@ -126,7 +126,7 @@ nav{
 
       #meal-card-container {
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         flex-wrap: wrap;
         margin-top: 1em;
         margin-bottom: 1.5em;
@@ -228,113 +228,168 @@ nav{
     display: none;
     -webkit-transition: display 5s ease;
     transition: display 5s ease;
-  }
-  #modal-container {
-    padding: 1em;
-    width: 40%;
-    font-size: 1.3em;
-    margin: auto;
-    margin-top: 2em;
-  }
-  #modal-content {
-    background: $primary-light;
-    padding: 1em;
-    border-radius: 8px; 
-    max-height: calc(100vh - 150px);
-    overflow-y: auto;
-  }
-  #meals-ordered span {
-    outline: none;
-  }
-  .meal-ordered {
-    border: 1px solid $dark;
-    padding: 0.5em 1em;
-    margin-bottom: 0.5em;
-  }
-  .meal-quantity-container {
-    display: flex;
-    justify-content: flex-start;
-  }
-  .meal-quantity {
-    width: 70%;
-    display: flex;
-    justify-content: space-evenly;
-  }
-  .remove-meal {
-    color: $error-response;
-    align-self: flex-end;
-  }
-  .remove-meal, .add, .reduce {
-    cursor: pointer;
-  }
-  #no-meal-in-cart {
-    border: 1px solid $error-response;
-    color: $error-response;
-    text-align: center;
-    padding: 0.4em 0.3em;
-    display: none;
-  }
-  #contact-user {
-    width: 100%;
-    margin: auto;
-  }
-  #contact-user input, #contact-user input { 
-    width: 100%;
-    margin: 0.8em auto;
-    display: block;
-    outline: none;
-    border-radius: 4px;
-    padding: 0.3em 0;
-    border: none;
-  }
-  #contact-user p {
-    text-align: left; 
-    font-style: italic;
-    font-size: 0.7em;
-  }   
-  #meals-ordered-container button{
-    width: 80%;
-    margin: 0.8em auto;
-    display: block; 
-    text-transform: capitalize;
-    font-size: 0.8em;
+  
+    #modal-container {
+      padding: 1em;
+      width: 40%;
+      font-size: 1.3em;
+      margin: auto;
+      margin-top: 2em;
+
+      #modal-content {
+        background: $primary-light;
+        padding: 1em;
+        border-radius: 8px; 
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+
+        #success-error-response {
+          #response-container {
+            display: none; 
+            padding: 1em;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 1.8em;
+
+            p {
+              margin: 0;
+              font-size: 1em;
+            }
+          }
+        }
+
+        /* Spinner animation for modal*/
+        #loader-container-modal {
+          display: none;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          margin-top: 1.8em;
+          
+          #loader-modal {
+            border: 16px solid $primary;
+            border-radius: 50%;
+            border-top: 16px solid $dark;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+          }
+
+          h3 {
+            margin: 0.5em;
+            font-size: 1.5em;
+            text-transform: capitalize;
+          }
+        }
+
+        #meals-ordered-container {
+          button{
+            width: 80%;
+            margin: 0.8em auto;
+            display: block; 
+            text-transform: capitalize;
+            font-size: 0.8em;
+          }
+
+          #meals-ordered {
+            span {
+              outline: none;
+            }
+
+            .meal-ordered {
+              border: 1px solid $dark;
+              padding: 0.5em 1em;
+              margin-bottom: 0.5em;
+              
+              .meal-quantity-container {
+                display: flex;
+                justify-content: flex-start;
+                
+                .meal-quantity {
+                  width: 70%;
+                  display: flex;
+                  justify-content: space-evenly;
+                  
+                  .remove-meal, .add, .reduce {
+                    cursor: pointer;
+                  }
+                  
+                  .remove-meal {
+                    color: $error-response;
+                    align-self: flex-end;
+                  }
+                }
+              }
+            }
+            
+            #menu-total {
+              margin: 0.4em 0;
+            }
+          }
+
+          #no-meal-in-cart {
+            border: 1px solid $error-response;
+            color: $error-response;
+            text-align: center;
+            padding: 0.4em 0.3em;
+            display: none;
+          }
+
+          #contact-user {
+            width: 100%;
+            margin: auto;
+            
+            input { 
+              width: 100%;
+              margin: 0.8em auto;
+              display: block;
+              outline: none;
+              border-radius: 4px;
+              padding: 0.3em 0;
+              border: none;
+            }
+            
+            p {
+              text-align: left; 
+              font-style: italic;
+              font-size: 0.7em;
+            }
+          }
+
+          #cancel-order{
+            background: $error-response;
+            color: $primary-light;
+            
+            &:disabled {
+              background: $primary-light;
+              color: $primary-light;
+            }
+          }
+
+          #place-order{
+            background: $success-response;
+            color: $primary-light;
+            
+            &:disabled {
+              background: $primary-light;
+              color: $dark;
+            }
+          }
+
+        }
+      }
+    }
   }
 
-  #cancel-order{
-    background: $error-response;
-    color: $primary-light;
-  }
-  #place-order{
-    background: $success-response;
-    color: $primary-light;
-  }
-  #place-order:disabled {
-    background: $primary-light;
-    color: $dark;
-  }
-  #cancel-order:disabled {
-    background: $primary-light;
-    color: $primary-light;
-  }
   .error-response {
     border: 1px solid $error-response;
     color: $error-response;
   }
+
   .success-response {
     border: 1px solid $success-response;
     color: $success-response; 
-  }
-  #response-container p {
-    margin: 0;
-    font-size: 1em;
-  }
-
-  #response-container {
-    display: none; 
-    padding: 1em;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 1.8em;
   }
 
   /* Spinner animation */
@@ -367,31 +422,6 @@ nav{
     width: 50%;
     margin: 1em auto;
     display: none;
-  }
-
-  /* Spinner animation for modal*/
-  #loader-container-modal {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 1.8em;
-    
-    #loader-modal {
-      border: 16px solid $primary;
-      border-radius: 50%;
-      border-top: 16px solid $dark;
-      width: 120px;
-      height: 120px;
-      -webkit-animation: spin 2s linear infinite; /* Safari */
-      animation: spin 2s linear infinite;
-    }
-
-    h3 {
-      margin: 0.5em;
-      font-size: 1.5em;
-      text-transform: capitalize;
-    }
   }
 
   /* For Safari browsers */
