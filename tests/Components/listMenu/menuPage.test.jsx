@@ -65,7 +65,7 @@ describe('Unit test for the MenuPage component', () => {
     expect(wrapper.find('CreateOrder').length).toEqual(1);
     expect(wrapper.find('Footer').length).toEqual(1);
     expect(wrapper.find('Loading').length).toEqual(1);
-    expect(wrapper.find('CardContainer').length).toEqual(0);
+    expect(wrapper.find('CardContainer').length).toEqual(1);
   });
   it('should update the internal state when a menu '
     + 'type is selected', async () => {

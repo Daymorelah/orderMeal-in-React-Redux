@@ -1,0 +1,582 @@
+
+/* Designed for 320px min width */
+
+
+/* Design navigation */
+nav{
+  background: $primary;
+  display: flex;
+  justify-content: space-between;
+
+  #logo a, #large-width-nav a, #meal-number, #logout {
+    text-decoration: none;
+    color: $dark;
+    display: block;
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1em;
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+  #logo a {
+    border: 2px solid $dark;
+    align-self: center;
+  }
+  #logout a{
+    background: $primary;
+    color: $dark;
+    margin: 0 2em;
+    padding: 1.3em;
+    text-decoration: none;
+    &:hover {
+      background: $dark;
+      color: $primary;
+    }
+  }
+
+  #large-width-nav {
+    display: none;
+    #active {
+      background: $primary-light;
+      color: $dark;
+    }
+    a {
+      &:hover {
+        background: $dark;
+        color: $primary;
+      }
+    }
+  }
+  
+  #nav-menu {
+    display: block;
+  }
+}
+
+#menu-page-container {
+  margin-bottom: 6em;
+  
+  #search-container {
+    .container {
+      width: 75%;
+      margin: auto;
+      /* meal search */
+      #search-meal-container {
+        margin-top: 3.5em;
+        
+        input {
+          width: 60%;
+          font-family: 'Roboto Condensed', sans-serif;
+          color: $dark;
+          padding: 8px;
+          border-radius: 8px;
+          outline: none;
+          border: none;
+        }
+
+        #search-meal-icon {
+          display: inline-block;
+          width: 8%;
+          font-size: 1.2em;
+          text-align: center;
+          outline: none;
+        }
+
+        #filter {
+          border: none;
+          outline: none;
+          padding: 4px;
+          border-radius: 6px;
+          font-size: 1.2em;
+          font-family: 'Roboto Condensed', sans-serif;
+          color: $dark;
+        }
+      }
+    }
+  }
+  
+  #ordered-meals-container{
+    /* meal ordered card */
+    .menu_page-container {
+      margin: auto;
+      width: 90%;
+
+      #ordered-meal-text {
+        width: 90%;
+        margin: auto;
+        margin-top: 1em;
+        padding: 1em 0;
+        font-size: 1.2em;
+        text-transform: capitalize;
+        display: flex;
+        justify-content: space-between;
+        
+        h3 {
+          padding: 0.5em;
+        }
+
+        #add-order {
+          color: $primary-light;
+          background: #8acc8a;
+          border-radius: 8px;
+          cursor: pointer;
+          color: #ffffff;
+        }
+      }
+
+      #meal-card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1em;
+        margin-bottom: 1.5em;
+
+        .meal-cards {
+          background: $primary;
+          border-radius: 8px;
+          width: 250px;
+          margin: 1em;
+          text-transform: capitalize;
+
+          .card-heading {
+            border-bottom: 1px solid $dark;
+            padding: 0.5em;
+            
+            img {
+              height: 140px;
+              margin: auto;
+              display: block;
+            }
+          }
+
+          .card-body {
+            padding: 0.5em 1em;
+            border-bottom: 1px solid $dark;
+
+            .meal-property {
+              font-weight: 900;
+              font-size: 1em;
+            }
+          }
+
+          /* meal card footer */ 
+          .card-footer {
+            display: flex;
+            justify-content: space-evenly;
+            width: 50%;
+            margin: 0.8em auto;
+
+            #card-button {
+              border: none;
+              outline: none;
+              padding: unset;
+              color: $primary-light;
+              border-radius: 8px;
+              text-transform: capitalize;
+              cursor: pointer;
+              font-size: smaller;
+            }
+
+            .add-to-cart {
+              background: $success-response;
+              width: 80%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .card-heading-icon {
+    align-self: center;
+  }
+
+  #card-button:disabled {
+    background: $primary;
+    color: $primary;
+  }
+
+  /* null menu */
+  #no-menu {
+    text-align: center;
+    font-size: 1em;
+    margin-top: 1em;
+    
+    a {
+      text-decoration: none;
+      background: $dark;
+      color: $primary;
+      border-radius: 4px;
+      display: block;
+      padding: 0.5em;
+      width: 20%;
+      margin: auto;
+      margin-top: 1em;
+    }
+  }
+
+  /* modal */
+  #addOrder-modal-container {
+    background: rgba(0,0,0,0.5);
+    color: $dark;
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    -webkit-transition: display 5s ease;
+    transition: display 5s ease;
+  
+    #modal-container {
+      padding: 1em;
+      width: 40%;
+      font-size: 1.3em;
+      margin: auto;
+      margin-top: 2em;
+
+      #modal-content {
+        background: $primary-light;
+        padding: 1em;
+        border-radius: 8px; 
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+
+        #success-error-response {
+          #response-container {
+            display: none; 
+            padding: 1em;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 1.8em;
+
+            p {
+              margin: 0;
+              font-size: 1em;
+            }
+          }
+        }
+
+        /* Spinner animation for modal*/
+        #loader-container-modal {
+          display: none;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          margin-top: 1.8em;
+          
+          #loader-modal {
+            border: 16px solid $primary;
+            border-radius: 50%;
+            border-top: 16px solid $dark;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+          }
+
+          h3 {
+            margin: 0.5em;
+            font-size: 1.5em;
+            text-transform: capitalize;
+          }
+        }
+
+        #meals-ordered-container {
+          button{
+            width: 80%;
+            margin: 0.8em auto;
+            display: block; 
+            text-transform: capitalize;
+            font-size: 0.8em;
+          }
+
+          #meals-ordered {
+            span {
+              outline: none;
+            }
+
+            .meal-ordered {
+              border: 1px solid $dark;
+              padding: 0.5em 1em;
+              margin-bottom: 0.5em;
+              
+              .meal-quantity-container {
+                display: flex;
+                justify-content: flex-start;
+                
+                .meal-quantity {
+                  width: 70%;
+                  display: flex;
+                  justify-content: space-evenly;
+                  
+                  .remove-meal, .add, .reduce {
+                    cursor: pointer;
+                  }
+                  
+                  .remove-meal {
+                    color: $error-response;
+                    align-self: flex-end;
+                  }
+                }
+              }
+            }
+            
+            #menu-total {
+              margin: 0.4em 0;
+            }
+          }
+
+          #no-meal-in-cart {
+            border: 1px solid $error-response;
+            color: $error-response;
+            text-align: center;
+            padding: 0.4em 0.3em;
+            display: none;
+          }
+
+          #contact-user {
+            width: 100%;
+            margin: auto;
+            
+            input { 
+              width: 100%;
+              margin: 0.8em auto;
+              display: block;
+              outline: none;
+              border-radius: 4px;
+              padding: 0.3em 0;
+              border: none;
+            }
+            
+            p {
+              text-align: left; 
+              font-style: italic;
+              font-size: 0.7em;
+            }
+          }
+
+          #cancel-order{
+            background: $error-response;
+            color: $primary-light;
+            
+            &:disabled {
+              background: $primary-light;
+              color: $primary-light;
+            }
+          }
+
+          #place-order{
+            background: $success-response;
+            color: $primary-light;
+            
+            &:disabled {
+              background: $primary-light;
+              color: $dark;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  .error-response {
+    border: 1px solid $error-response;
+    color: $error-response;
+  }
+
+  .success-response {
+    border: 1px solid $success-response;
+    color: $success-response; 
+  }
+
+  /* Spinner animation */
+  #loader-container {
+    display: none;
+    text-align: -webkit-center;
+    margin-top: 1.8em;
+  }
+
+  #loader {
+    border: 16px solid $primary;
+    border-radius: 50%;
+    border-top: 16px solid $dark;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  #loader-container h3 {
+    margin: 0.5em;
+    font-size: 1.5em;
+    text-transform: capitalize;
+  }
+
+  #no-internet {
+    padding: 0.5em;
+    text-align: center;
+    font-size: 1.2em;
+    width: 50%;
+    margin: 1em auto;
+    display: none;
+  }
+
+  /* For Safari browsers */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @media screen and (min-width: 910px) { 
+    nav {
+      padding: 0 2em;
+    }
+
+  }
+  @media screen and (max-width: 2050px) {
+    #modal-container {
+      width: 30%;
+    }
+  }
+  @media screen and (max-width: 1050px) {
+    .card-footer {
+      width: 70%;
+    }
+    h2{
+      font-size: 1.2em;
+    }
+  }
+  @media screen and (max-width: 960px) {
+    h2 {
+      font-size: 1em;
+    }
+  }
+  @media screen and (max-width: 860px) {
+    .container {
+      width: 85%;
+      margin: auto;
+    }
+
+    .card-footer {
+      width: 80%;
+    }
+  }
+  @media screen and (max-width: 780px) {
+    .container {
+      width: 90%;
+    }
+    #modal-container {
+      width: 40%;
+    }
+  }
+  @media screen and (min-width: 630px) {
+    #hamburger, #small-width-nav {
+      display: none;
+    }
+    #large-width-nav {
+      display: none;
+    }
+    #logout {
+      display: block;
+    }
+    #large-width-nav a {
+      display: inline-block;
+      margin: 0 0.5em;
+      padding: 1.3em;
+    }
+    #logo {
+      margin: 0 2em;
+    }
+  }
+  @media screen and (max-width: 670px) {
+    .container {
+      width: 80%;
+    }
+    #menu-page-container{
+    #ordered-meals-container{
+    .menu_page-container {
+    #meal-card-container {
+      .meal-cards {
+        width: 45%;
+      }
+    }}}}
+  }
+  @media screen and (max-width: 580px) {
+    #search-meal-card-container input {
+      width: 50%;
+    }
+    #modal-container {
+      width: 60%;
+    }
+  }
+  @media screen and (max-width: 536px) {
+    .container {
+      width: 90%;
+    }
+  }
+  @media screen and (max-width: 470px) {
+    #modal-container {
+      width: 70%;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    #menu-page-container{
+      #search-container{
+        .container {
+          width: 70%;
+          #search-meal-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            #filter {
+              width: 80%;
+              margin-top: 0.5em;
+            }
+            input {
+              width: 60%;
+            }
+            #search-meal-icon {
+              width: 10%;
+              align-self: center;
+            }
+          }
+        }
+      }
+
+      #ordered-meals-container{
+      .menu_page-container {
+        #ordered-meal-text {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        #meal-card-container {  
+        .meal-cards {
+          width: 80%;
+          .meal-property {
+            font-size: 1.3em;
+          }
+          .card-footer {
+            width: 65%;
+          }
+        }
+        }}
+      }
+    }
+  }
+  @media screen and (max-width: 385px) {
+    .container {
+      width: 90%;
+    }
+    #modal-container {
+      width: 85%;
+    }
+  }
+}

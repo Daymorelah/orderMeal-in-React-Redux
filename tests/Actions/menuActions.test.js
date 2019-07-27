@@ -43,9 +43,7 @@ describe('Unit tests for the menu actions', () => {
       if (axios.get.restore) axios.get.restore();
     });
     const response = {
-      data: {
-        data: menuList,
-      }
+      data: menuList,
     };
     it('should dispatch the appropriate action when '
     + 'a get request to list menu is successful', () => {
@@ -60,7 +58,7 @@ describe('Unit tests for the menu actions', () => {
     });
     it('should dispatch the appropriate action when '
     + 'a menu type requested for is not available', () => {
-      response.data.data.menu = null;
+      response.data.menu = null;
       const menuType = 'some menu type';
       sinon.stub(axios, 'get').resolves(response);
       const store = mockStore({});
