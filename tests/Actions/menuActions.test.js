@@ -63,7 +63,7 @@ describe('Unit tests for the menu actions', () => {
       sinon.stub(axios, 'get').resolves(response);
       const store = mockStore({});
       const expectedAction = [
-        { type: actionTypes.NO_MENU_TYPE_YET, payload: menuType, }
+        { type: actionTypes.NO_MENU_TYPE_YET, payload: menuType }
       ];
       return store.dispatch(menuAction.loadMenu(menuType)).then(() => {
         expect(store.getActions()).toEqual(expectedAction);
