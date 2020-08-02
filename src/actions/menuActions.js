@@ -18,9 +18,9 @@ export const loadMenu = filterBy => (dispatch) => {
   let URL = '';
   if (filterBy.length) {
     const filter = `?filter=${filterBy}`;
-    URL = `${domain}/api/v1/menu${filter}`;
+    URL = `${domain}/api/v1/menus${filter}`;
   } else {
-    URL = `${domain}/api/v1/menu`;
+    URL = `${domain}/api/v1/menus`;
   }
   return axios.get(URL).then((response) => {
     if (!response.data.menu) {
