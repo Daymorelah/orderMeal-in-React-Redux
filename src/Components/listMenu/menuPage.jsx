@@ -10,6 +10,7 @@ import SearchMenu from './searchMenu';
 import NavigationBar from '../navigationBar';
 import Loading from '../loading';
 import CreateOrder from '../createOrder/createOrder';
+import getPayload from '../../utilities/decodeJwt';
 import Footer from '../footer';
 import * as menuActions from '../../actions/menuActions';
 import * as placeOrderActions from '../../actions/placeOrderAction';
@@ -26,12 +27,13 @@ export class MenuPage extends Component {
   };
 
   componentDidMount() {
-    const { loadMenu } = this.props;
+    const { loadMenu, location: { search, } } = this.props;
     const { filterBy } = this.state;
     const itemsPreviouslySelected = JSON
       .parse(localStorage.getItem('menuItemSelected'));
     const phoneNumber = localStorage.getItem('phoneNumber') || '';
     const address = localStorage.getItem('address') || '';
+    this.showMessage(search);
     loadMenu(filterBy)
       .then(() => {
         this.setState({
@@ -41,7 +43,24 @@ export class MenuPage extends Component {
           phoneNumber
         });
       })
-      .catch(error => toastrUtil('error', error.message, 4000));
+      .catch(error => toastrUtil('error', error.message, 400));
+  }
+
+  showMessage = (search) => {
+    const params = new URLSearchParams(search);
+    const status = params.has('stat') ? params.get('stat') : null;
+    if (status !== null) {
+      try {
+        const payload = getPayload(status);
+        if (payload.success) {
+          toastrUtil('success', payload.message);
+          localStorage.setItem(
+            'userDetails', JSON.stringify(payload.userDetails)
+          );
+          localStorage.setItem('token', payload.token);
+        }
+      } catch (err) { return false; }
+    }
   }
 
   handleFilterBy = () => {
@@ -192,16 +211,16 @@ export class MenuPage extends Component {
                     isMealCanceled={isMealCanceled}
                   />
                 ) : (!isRequestSent && (
-                <div id="no-menu">
-                  <h3>
-                    {`There are no ${menuTypeUnavailable.toLowerCase()
-                      || 'meals'} available yet.`}
-                  </h3>
-                  <p>
-                    You can check back soon or go to your
-                    <Link to="./home">Profile Page</Link>
-                  </p>
-                </div>
+                  <div id="no-menu">
+                    <h3>
+                      {`There are no ${menuTypeUnavailable.toLowerCase()
+                        || 'meals'} available yet.`}
+                    </h3>
+                    <p>
+                      You can check back soon or go to your
+                      <Link to="./home">Profile Page</Link>
+                    </p>
+                  </div>
                 )
                 )
               }
@@ -249,6 +268,9 @@ MenuPage.propTypes = {
     PropTypes.object, PropTypes.number, PropTypes.string
   ]).isRequired,
   registeredUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.object
+  ])).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuPage);

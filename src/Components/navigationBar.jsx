@@ -8,13 +8,11 @@ const NavigationBar = ({
   <header>
     <nav>
       <div id="logo">
-        <Link to="landingPage">O-Meal</Link>
+        <Link to="/menu">O-Meal</Link>
       </div>
-      <div id="nav-menu">
-        {
-        // eslint-disable-next-line no-nested-ternary
-        showRightNavBar
-          ? (
+      { showRightNavBar ? (
+        <div id="nav-menu">
+          {
             isAuthenticated || localStorage.getItem('userDetails')
               ? (
                 <div id="logout">
@@ -25,18 +23,24 @@ const NavigationBar = ({
                   <Link to="/login">{showOnUnauth}</Link>
                 </div>
               )
-          ) : (<div />)
-        }
-      </div>
+          }
+        </div>
+      ) : null
+      }
     </nav>
   </header>
 );
 
 NavigationBar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  showOnAuth: PropTypes.string.isRequired,
-  showOnUnauth: PropTypes.string.isRequired,
+  showOnAuth: PropTypes.string,
+  showOnUnauth: PropTypes.string,
   showRightNavBar: PropTypes.bool.isRequired,
+};
+
+NavigationBar.defaultProps = {
+  showOnAuth: '',
+  showOnUnauth: '',
 };
 
 export default NavigationBar;

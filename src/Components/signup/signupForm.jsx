@@ -27,18 +27,18 @@ const SignupForm = ({
           readOnly={makeInputsReadOnly}
         />
         <FormInput
-          type="password"
-          id="password"
-          placeHolder="password"
-          value={password}
-          onChange={onChange}
-          readOnly={makeInputsReadOnly}
-        />
-        <FormInput
           type="email"
           id="email"
           placeHolder="email"
           value={email}
+          onChange={onChange}
+          readOnly={makeInputsReadOnly}
+        />
+        <FormInput
+          type="password"
+          id="password"
+          placeHolder="password"
+          value={password}
           onChange={onChange}
           readOnly={makeInputsReadOnly}
         />
