@@ -8,7 +8,11 @@ import toastr from 'toastr';
  */
 const toastrUtil = (type, message) => {
   const options = {
-    closeButton: true, preventDuplicates: true, extendedTimeOut: 3, timeOut: 0,
+    closeButton: true,
+    preventDuplicates: true,
+    extendedTimeOut: 3,
+    timeOut: 4500,
+    progressBar: true
   };
   if (type === 'success') {
     toastr.options = { ...options };

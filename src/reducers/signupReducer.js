@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 export default (
   state = {
-    userDetails: {}, message: '', isAuthenticated: false, errorMessage: ''
+    userDetails: {}, isAuthenticated: false, errorMessage: ''
   },
   action
 ) => {
@@ -10,8 +10,7 @@ export default (
     case actionTypes.AUTH_USER_SUCCESS:
       return {
         ...state,
-        userDetails: action.userCreated,
-        message: action.userCreated.message,
+        userDetails: action.userDetails,
         isAuthenticated: true,
       };
     case actionTypes.CLIENT_ERROR:

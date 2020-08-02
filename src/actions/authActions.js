@@ -24,7 +24,7 @@ export const generalError = () => ({
   message: 'Something awful happened. We will fix this soon.'
 });
 
-export const signupUserSuccess = successMessage => ({
+export const authUserSuccess = successMessage => ({
   type: actionTypes.AUTH_USER_SUCCESS,
   message: successMessage,
 });
@@ -35,40 +35,21 @@ export const signupUserSuccess = successMessage => ({
  * user needed for authenticating
  * @param {string} authType - specifies the auth type i.e. login or signup
  */
-export const initialSignupProcess = (userDetails, authType) => () => axios
-  .post(`${domain}/api/v1/auth/${authType}`, userDetails)
-  .then(response => response.data)
-  .catch((error) => {
-    throw ((error.response && error.response.data)
-      || 'Our servers are down. Please try again later.');
-  });
-
-/**
- * This method gets called when the signup or login button gets clicked.
- * @param {object} userDetails - contains details of the
- * user needed for authenticating
- * @param {string} authType - specifies the auth type i.e. login or signup
- */
-export const authUser = (userDetails, authType) => dispatch => axios
+const authentication = (userDetails, authType) => dispatch => axios
   .post(`${domain}/api/v1/auth/${authType}`, userDetails)
   .then((response) => {
-    if (response.data.success) {
-      dispatch(signupUserSuccess(response.data.message));
-      return true;
-    }
-  }).catch((error) => {
-    if (error.response && error.response.status < 499) {
-      dispatch(clientError(error.response.data.data));
-      return false;
-    }
-    if (error.response && error.response.status > 499) {
-      dispatch(serverError());
-      return false;
+    dispatch(authUserSuccess(response.data));
+    return response.data;
+  })
+  .catch((error) => {
+    if (error.response) {
+      throw error.response.data;
     }
     if (error.message === 'Network Error') {
-      dispatch(noInternet());
-      return false;
+      throw new Error('Could not connect to the internet. '
+          + 'Please check your connection.');
     }
-    dispatch(generalError());
-    return false;
+    throw new Error('Our servers are down. Please try again later.');
   });
+
+export default authentication;

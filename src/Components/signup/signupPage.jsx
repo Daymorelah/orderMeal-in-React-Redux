@@ -6,7 +6,7 @@ import NavigationBar from '../navigationBar';
 import SignupForm from './signupForm';
 import Footer from '../footer';
 import getPayload from '../../utilities/decodeJwt';
-import * as authActions from '../../actions/authActions';
+import authentication from '../../actions/authActions';
 
 export class SignupPage extends Component {
   static initialState = {
@@ -35,8 +35,12 @@ export class SignupPage extends Component {
     const status = params.has('stat') ? params.get('stat') : null;
     if (status !== null) {
       try {
+        const { history, } = this.props;
         const payload = getPayload(status);
-        if (payload.success) return toastr('success', payload.message);
+        if (payload.success) {
+          toastr('success', payload.message);
+          return history.push('/menu');
+        }
         if (!payload.success && payload.message) {
           return toastr('error', payload.message);
         }
@@ -50,22 +54,25 @@ export class SignupPage extends Component {
       makeInputsReadOnly: true,
       buttonStatus: 'Signing in...'
     });
-    const { signupUser } = this.props;
-    const { username, password, email } = this.state;
+    const { signupUser, history } = this.props;
+    const { password, email, username } = this.state;
     try {
-      const response = await signupUser({
-        username, password, email,
-      }, 'signup');
-      if (response.success) {
-        toastr('success', response.message);
-        return this.setState({
-          ...SignupPage.initialState,
-          buttonStatus: 'Signup',
-          makeInputsReadOnly: false,
-        });
+      const res = await signupUser(
+        { password, email, username, }, 'signup'
+      );
+      if (res.success) {
+        toastr('success', 'Signup successful');
+        localStorage.setItem('userDetails', JSON.stringify(res.userDetails));
+        localStorage.setItem('token', res.token);
+        return history.push('/menu');
       }
     } catch (err) {
-      toastr('error', err.message || err);
+      toastr('error',
+        err.message
+        || err.errors[0].email
+        || err.errors[0].password
+        || err.errors[0].username
+        || err);
       return this.setState({
         buttonStatus: 'Signup',
         makeInputsReadOnly: false,
@@ -88,8 +95,6 @@ export class SignupPage extends Component {
       <div>
         <NavigationBar
           isAuthenticated={registeredUser.isAuthenticated}
-          showOnAuth=""
-          showOnUnauth=""
           showRightNavBar={false}
         />
         <main>
@@ -134,8 +139,9 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  signupUser: (userDetails, authType) => dispatch(authActions
-    .initialSignupProcess(userDetails, authType)),
+  signupUser: (userDetails, authType) => dispatch(
+    authentication(userDetails, authType)
+  ),
 });
 
 

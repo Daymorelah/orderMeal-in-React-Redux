@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import AboutPage from './about';
 import HomePage from './home';
 import SignupPage from './signup/signupPage';
@@ -9,7 +9,7 @@ import MenuPage from './listMenu/menuPage';
 const App = () => (
   <div>
     <Switch>
-      <Route exact path="/" component={SignupPage} />
+      <Route exact path="/" render={() => <Redirect to="/menu" />} />
       <Route exact path="/about" component={AboutPage} />
       <Route exact path="/home" component={HomePage} />
       <Route exact path="/signup" component={SignupPage} />

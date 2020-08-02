@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import toastr from '../../utilities/toastrUtil';
 import LoginForm from './loginForm';
 import NavigationBar from '../navigationBar';
+import getPayload from '../../utilities/decodeJwt';
 import Footer from '../footer';
-import * as authActions from '../../actions/authActions';
+import authentication from '../../actions/authActions';
 
 export class LoginPage extends Component {
   initialState = {
@@ -21,9 +22,23 @@ export class LoginPage extends Component {
   };
 
   componentDidMount() {
-    const { registeredUser, history } = this.props;
+    const { registeredUser, history, location: { search } } = this.props;
     if (registeredUser.isAuthenticated || localStorage.getItem('userDetails')) {
       history.push('/menu');
+    }
+    this.showMessage(search);
+  }
+
+  showMessage = (search) => {
+    const params = new URLSearchParams(search);
+    const status = params.has('stat') ? params.get('stat') : null;
+    if (status !== null) {
+      try {
+        const payload = getPayload(status);
+        if (!payload.success && payload.message) {
+          return toastr('error', payload.message);
+        }
+      } catch (err) { return false; }
     }
   }
 
@@ -86,6 +101,9 @@ LoginPage.propTypes = {
   history: PropTypes.oneOfType([
     PropTypes.object, PropTypes.number, PropTypes.string
   ]).isRequired,
+  location: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.object
+  ])).isRequired,
 };
 
 export const mapStateToProps = state => ({
@@ -93,8 +111,9 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  loginUser: (userDetails, authType) => dispatch(authActions
-    .authUser(userDetails, authType))
+  loginUser: (userDetails, authType) => dispatch(
+    authentication(userDetails, authType)
+  )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
