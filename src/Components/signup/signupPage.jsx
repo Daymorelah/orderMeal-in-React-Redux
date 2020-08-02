@@ -62,9 +62,7 @@ export class SignupPage extends Component {
       );
       if (res.success) {
         toastr('success', 'Signup successful');
-        localStorage.setItem(
-          'userDetails', JSON.stringify(res.userDetails)
-        );
+        localStorage.setItem('userDetails', JSON.stringify(res.userDetails));
         localStorage.setItem('token', res.token);
         return history.push('/menu');
       }
