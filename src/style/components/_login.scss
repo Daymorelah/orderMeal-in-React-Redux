@@ -1,0 +1,72 @@
+#login-page-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+  margin-top: 20px;
+  width: 90%;
+  margin-bottom: 4em;
+  #form-container {
+    margin: 5vh 0;
+    #header-text {
+      text-align: center;
+      margin-bottom: 1.8em;
+      text-transform: capitalize;
+      width: 100%;
+    }
+    #login-form {
+      background: $primary-light;
+      border-radius: 8px;
+      padding: 1.5em 0;
+      width: 95%;
+      margin: auto;
+      h2 {
+        text-transform: capitalize;
+        text-align: center;
+        font-size: 1.8em;
+        margin-bottom: 0.8em;
+      }
+      input {
+        display: block;
+        background: none;
+        border: none;
+        border-bottom: 1px solid $dark;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1em;
+        margin: 1em auto;
+        outline: none;
+        padding: 0.3em 0.8em;
+        width: 80%;
+      }
+      button {
+        outline: none;
+        border: none;
+        background: $primary;
+        color: $dark;
+        border-radius: 0.3em;
+        display: block;
+        width: 80%;
+        font-family: 'Roboto Condensed', sans-serif;
+        height: 1.8em;
+        padding: 0.4em;
+        margin: 1em auto;
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+      button:disabled {
+        background: $primary-light;
+        font-size: 1em;
+        font-style: italic;
+      }
+      #signup {
+        text-align: center;
+        a {
+          text-decoration: none;
+          color: $dark;
+          font-weight: 900;
+          font-style: italic;
+        }
+      }
+    }
+  }
+}

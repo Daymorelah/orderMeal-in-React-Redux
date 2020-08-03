@@ -90,7 +90,7 @@ export class SignupPage extends Component {
 
   render() {
     const { registeredUser } = this.props;
-    const { makeInputsReadOnly, buttonStatus, status } = this.state;
+    const { makeInputsReadOnly, buttonStatus, } = this.state;
     return (
       <div>
         <NavigationBar
@@ -109,7 +109,6 @@ export class SignupPage extends Component {
             <SignupForm
               onClick={this.handleOnsubmit}
               message={registeredUser.message}
-              status={status}
               makeInputsReadOnly={makeInputsReadOnly}
               onChange={this.handleOnInputChange}
               buttonStatus={buttonStatus}
