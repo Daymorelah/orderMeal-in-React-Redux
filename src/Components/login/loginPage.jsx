@@ -10,14 +10,13 @@ import authentication from '../../actions/authActions';
 
 export class LoginPage extends Component {
   initialState = {
-    username: '',
+    email: '',
     password: '',
   };
 
   state = {
-    isTyping: false,
     buttonStatus: 'Login',
-    status: '',
+    makeInputsReadOnly: false,
     ...this.initialState,
   };
 
@@ -29,6 +28,10 @@ export class LoginPage extends Component {
     this.showMessage(search);
   }
 
+  /**
+   * This method is called when a registered user is redirected to
+   * the login page.
+   */
   showMessage = (search) => {
     const params = new URLSearchParams(search);
     const status = params.has('stat') ? params.get('stat') : null;
@@ -42,23 +45,34 @@ export class LoginPage extends Component {
     }
   }
 
-  handleOnsubmit = (event) => {
+  handleOnsubmit = async (event) => {
     event.preventDefault();
-    const { loginUser, history } = this.props;
     this.setState({
-      isTyping: false,
-      status: true,
+      makeInputsReadOnly: true,
       buttonStatus: 'Logging in...'
     });
-    const { username, password, email } = this.state;
-    loginUser({ username, password, email }, 'login').then((response) => {
-      if (response === undefined) {
-        this.setState({ status: true });
-        toastr('success', 'yay!', 3000);
+    const { loginUser, history } = this.props;
+    const { password, email } = this.state;
+    try {
+      const res = await loginUser({ password, email }, 'login');
+      if (res.success) {
+        toastr('success', 'Login successful');
+        localStorage.setItem('userDetails', JSON.stringify(res.userDetails));
+        localStorage.setItem('token', res.token);
         return history.push('/menu');
       }
-      this.setState({ buttonStatus: 'Login', status: false });
-    });
+    } catch (err) {
+      toastr('error',
+        err.message
+        || err.errors[0].email
+        || err.errors[0].password
+        || err);
+      return this.setState({
+        buttonStatus: 'Login',
+        makeInputsReadOnly: false,
+        ...LoginPage.initialState
+      });
+    }
   }
 
   handleOnInputChange = (event) => {
@@ -71,22 +85,18 @@ export class LoginPage extends Component {
 
   render() {
     const { registeredUser } = this.props;
-    const { isTyping, buttonStatus, status } = this.state;
+    const { buttonStatus, makeInputsReadOnly, } = this.state;
     return (
       <div>
         <NavigationBar
           isAuthenticated={registeredUser.isAuthenticated}
-          showOnAuth=""
-          showOnUnauth=""
           showRightNavBar={false}
         />
         <LoginForm
           onClick={this.handleOnsubmit}
-          message={registeredUser.message}
-          status={status}
           onChange={this.handleOnInputChange}
-          isTyping={isTyping}
           buttonStatus={buttonStatus}
+          makeInputsReadOnly={makeInputsReadOnly}
           {...this.state}
         />
         <Footer />

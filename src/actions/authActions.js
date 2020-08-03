@@ -4,26 +4,6 @@ import * as actionTypes from './actionTypes';
 const domain = (process.env.NODE_ENV !== 'production')
   ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL;
 
-export const noInternet = () => ({
-  type: actionTypes.NO_INTERNET,
-  message: 'Could not connect to the internet. Please check your connection.'
-});
-
-export const serverError = () => ({
-  type: actionTypes.SERVER_ERROR,
-  message: 'Internal server error. Please try again',
-});
-
-export const clientError = response => ({
-  type: actionTypes.CLIENT_ERROR,
-  message: response.message,
-});
-
-export const generalError = () => ({
-  type: actionTypes.GENERAL_ERROR,
-  message: 'Something awful happened. We will fix this soon.'
-});
-
 export const authUserSuccess = successMessage => ({
   type: actionTypes.AUTH_USER_SUCCESS,
   message: successMessage,
