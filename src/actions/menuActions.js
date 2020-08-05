@@ -6,7 +6,7 @@ const domain = (process.env.NODE_ENV !== 'production')
 
 export const loadMenuSuccess = response => ({
   type: actionTypes.LOAD_MENU_SUCCESS,
-  menu: response.menu,
+  menus: response.menus,
 });
 
 export const noMenuTypeYet = menuType => ({
@@ -23,7 +23,7 @@ export const loadMenu = filterBy => (dispatch) => {
     URL = `${domain}/api/v1/menus`;
   }
   return axios.get(URL).then((response) => {
-    if (!response.data.menu) {
+    if (!response.data.menus) {
       return dispatch(noMenuTypeYet(filterBy));
     }
     return dispatch(loadMenuSuccess(response.data));

@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import Button from './button';
 
 const Card = ({
-  meal, mealType, prize, onClick, isMealCanceled, photo,
+  name, category, prize, onClick, isMealCanceled, photo,
 }) => {
   const style = {};
   if (isMealCanceled === true) style.display = 'block';
   return (
     <div className="meal-cards">
       <div className="card-heading">
-        <img src={photo} alt={`menu-${mealType}`} />
+        <img src={photo} alt={`menu-${category}`} />
       </div>
       <div className="card-body">
         <p>
           <span className="meal-property">
-            {`${mealType}: `}
+            {`${category}: `}
           </span>
-          {meal}
+          {name}
         </p>
         <p>
           <span className="meal-property">Prize: </span>
@@ -39,8 +39,8 @@ const Card = ({
 };
 
 Card.propTypes = {
-  meal: PropTypes.string.isRequired,
-  mealType: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   prize: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
   isMealCanceled: PropTypes.bool.isRequired,

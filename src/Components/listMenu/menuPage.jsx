@@ -179,7 +179,7 @@ export class MenuPage extends Component {
   }
 
   render() {
-    const { menu, menuTypeUnavailable, registeredUser } = this.props;
+    const { menus, menuTypeUnavailable, registeredUser } = this.props;
     const {
       isRequestSent, showOrders, menuItemSelected, isMealCanceled,
       address, phoneNumber
@@ -199,14 +199,14 @@ export class MenuPage extends Component {
           />
           <section id="ordered-meals-container">
             <div className="menu_page-container">
-              <MenuHeading menuItems={menu.length} onClick={this.showOrders} />
+              <MenuHeading menuItems={menus.length} onClick={this.showOrders} />
               {
                 isRequestSent ? <Loading isRequestSent={isRequestSent} /> : null
               }
               {
-                menu.length ? (
+                menus.length ? (
                   <CardContainer
-                    menu={menu}
+                    menus={menus}
                     onClick={this.handleMealCardOnclick}
                     isMealCanceled={isMealCanceled}
                   />
@@ -226,7 +226,7 @@ export class MenuPage extends Component {
               }
             </div>
           </section>
-          { menu.length ? <Paginate /> : null }
+          { menus.length ? <Paginate /> : null }
           <CreateOrder
             showOrders={showOrders}
             menuItems={menuItemSelected}
@@ -248,7 +248,7 @@ export class MenuPage extends Component {
 }
 
 export const mapStateToProps = state => ({
-  menu: state.menuReducer.menu,
+  menus: state.menuReducer.menus || [],
   menuTypeUnavailable: state.menuReducer.noMenu,
   registeredUser: state.currentUser,
 });
@@ -261,7 +261,7 @@ export const mapDispatchToProps = dispatch => ({
 
 MenuPage.propTypes = {
   loadMenu: PropTypes.func.isRequired,
-  menu: PropTypes.arrayOf(PropTypes.object).isRequired,
+  menus: PropTypes.arrayOf(PropTypes.object).isRequired,
   menuTypeUnavailable: PropTypes.string.isRequired,
   placeOrder: PropTypes.func.isRequired,
   history: PropTypes.oneOfType([

@@ -4,7 +4,7 @@ export default (state = { menu: [], noMenu: '' }, action) => {
   switch (action.type) {
     case actionTypes.LOAD_MENU_SUCCESS:
       return {
-        menu: [...action.menu],
+        menus: [...action.menus],
         noMenu: ''
       };
     case actionTypes.NO_MENU_TYPE_YET:
