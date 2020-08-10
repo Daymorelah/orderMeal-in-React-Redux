@@ -19,7 +19,7 @@
     "jest": true
   },
   "rules": {
-    "max-len": [1, 80, 2],
+    "max-len": [1, 98, 2],
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "import/no-named-as-default": 0,

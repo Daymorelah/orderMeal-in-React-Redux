@@ -41,7 +41,7 @@ const Card = ({
 Card.propTypes = {
   name: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
-  prize: PropTypes.number.isRequired,
+  prize: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   isMealCanceled: PropTypes.bool.isRequired,
   photo: PropTypes.string.isRequired,

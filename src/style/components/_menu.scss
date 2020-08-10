@@ -21,11 +21,14 @@ nav{
   #logo a {
     border: 2px solid $dark;
     align-self: center;
+    &:hover {
+      background: $dark;
+      color: $primary;
+    }
   }
   #logout a{
-    background: $primary;
     color: $dark;
-    margin: 0 2em;
+    margin-right: 2em;
     padding: 1.3em;
     text-decoration: none;
     &:hover {
