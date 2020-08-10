@@ -34,7 +34,7 @@ export class MenuPage extends Component {
     const phoneNumber = localStorage.getItem('phoneNumber') || '';
     const address = localStorage.getItem('address') || '';
     this.showMessage(search);
-    loadMenu(filterBy)
+    loadMenu({ filterBy, })
       .then(() => {
         this.setState({
           isRequestSent: false,
@@ -178,8 +178,27 @@ export class MenuPage extends Component {
     });
   }
 
+  getPage = (pageNumber) => {
+    const { loadMenu } = this.props;
+    const itemsPreviouslySelected = JSON
+      .parse(localStorage.getItem('menuItemSelected'));
+    const phoneNumber = localStorage.getItem('phoneNumber') || '';
+    const address = localStorage.getItem('address') || '';
+    loadMenu({ page: pageNumber, }).then(() => {
+      this.setState({
+        isRequestSent: false,
+        menuItemSelected: itemsPreviouslySelected || [],
+        address,
+        phoneNumber
+      });
+    })
+      .catch(error => toastrUtil('error', error.message, 400));
+  }
+
   render() {
-    const { menus, menuTypeUnavailable, registeredUser } = this.props;
+    const {
+      menus, menuTypeUnavailable, registeredUser, pagination,
+    } = this.props;
     const {
       isRequestSent, showOrders, menuItemSelected, isMealCanceled,
       address, phoneNumber
@@ -226,7 +245,7 @@ export class MenuPage extends Component {
               }
             </div>
           </section>
-          { menus.length ? <Paginate /> : null }
+          { menus.length ? <Paginate pagination={pagination} getPage={this.getPage} /> : null }
           <CreateOrder
             showOrders={showOrders}
             menuItems={menuItemSelected}
@@ -251,6 +270,7 @@ export const mapStateToProps = state => ({
   menus: state.menuReducer.menus || [],
   menuTypeUnavailable: state.menuReducer.noMenu,
   registeredUser: state.currentUser,
+  pagination: state.menuReducer.pagination,
 });
 
 export const mapDispatchToProps = dispatch => ({
@@ -271,6 +291,7 @@ MenuPage.propTypes = {
   location: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.object
   ])).isRequired,
+  pagination: PropTypes.objectOf(PropTypes.number).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuPage);

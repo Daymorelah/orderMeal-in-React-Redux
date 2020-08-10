@@ -83,23 +83,21 @@ img {
 
 /* paginate */
 #paginate {
-  text-align: center;
-  margin: 2em 0;
   display: flex;
   justify-content: center;
-  
-  .page {
-    display: inline-block;
-    font-size: 1em;
-    padding: 0.3em;
-    width: 1.8em;
-    margin-right: 2%;
-    background: $dark;
-    color: $primary-light;
-    border-radius: 50%;
+  padding: 10px 0;
+  margin: 10px auto;
+  span {
+    cursor: pointer;
+    float: left;
+    padding: 4px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid $primary-light;
+    border-radius: 2px;
   }
-  
-  a {
+  span.active {
+    background-color: $dark;
     color: $primary-light;
   }
 }

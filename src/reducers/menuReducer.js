@@ -1,11 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
 
-export default (state = { menu: [], noMenu: '' }, action) => {
+export default (state = { menu: [], noMenu: '', pagination: {} }, action) => {
   switch (action.type) {
     case actionTypes.LOAD_MENU_SUCCESS:
       return {
         menus: [...action.menus],
-        noMenu: ''
+        noMenu: '',
+        pagination: action.pagination,
       };
     case actionTypes.NO_MENU_TYPE_YET:
       return {

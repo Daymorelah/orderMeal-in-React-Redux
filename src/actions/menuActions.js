@@ -7,6 +7,7 @@ const domain = (process.env.NODE_ENV !== 'production')
 export const loadMenuSuccess = response => ({
   type: actionTypes.LOAD_MENU_SUCCESS,
   menus: response.menus,
+  pagination: response.paginationMetaData,
 });
 
 export const noMenuTypeYet = menuType => ({
@@ -14,14 +15,12 @@ export const noMenuTypeYet = menuType => ({
   payload: menuType
 });
 
-export const loadMenu = filterBy => (dispatch) => {
-  let URL = '';
-  if (filterBy.length) {
-    const filter = `?filter=${filterBy}`;
-    URL = `${domain}/api/v1/menus${filter}`;
-  } else {
-    URL = `${domain}/api/v1/menus`;
-  }
+export const loadMenu = ({ filterBy, limit = 6, page, }) => (dispatch) => {
+  let URL = `${domain}/api/v1/menus`;
+  URL += (filterBy || limit || page) ? '?' : '';
+  URL += (filterBy) ? `filter=${filterBy}&` : '';
+  URL += (limit) ? `limit=${limit}&` : '';
+  URL += (page) ? `page=${page}` : '';
   return axios.get(URL).then((response) => {
     if (!response.data.menus) {
       return dispatch(noMenuTypeYet(filterBy));

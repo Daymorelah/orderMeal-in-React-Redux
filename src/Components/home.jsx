@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HomePage = () => (
-  <div>
+  <>
     <header>
       <nav>
         <div id="logo">
@@ -107,7 +107,7 @@ const HomePage = () => (
         <p>Designed by Hussain A.I &copy; 2018</p>
       </div>
     </footer>
-  </div>
+  </>
 );
 
 export default HomePage;
