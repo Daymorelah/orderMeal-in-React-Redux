@@ -1,30 +1,15 @@
 import React from 'react';
+import Footer from './footer';
+import Paginate from './paginate';
+import NavigationBar from './navigationBar';
 
-const HomePage = () => (
+const HomePage = ({ registeredUser, }) => (
   <>
     <header>
-      <nav>
-        <div id="logo">
-          <a href="./loginPage.html">O-Meal</a>
-        </div>
-        <div id="large-width-nav">
-          <a id="active" href="./userProfile.html">Profile</a>
-          <a href="./availableOrders.html">Order</a>
-          <a href="./aboutPage.html">About</a>
-        </div>
-        <div id="nav-menu">
-          <a className="logout" href="./">Logout</a>
-          <span id="hamburger">
-            <i className="fas fa-bars fa-2x" />
-          </span>
-        </div>
-      </nav>
-      <div id="small-width-nav">
-        <a href="./userProfile.html">Profile</a>
-        <a href="./availableOrders.html">Order</a>
-        <a href="./aboutPage.html">About</a>
-        <a className="logout" href="./">Logout</a>
-      </div>
+      <NavigationBar
+        isAuthenticated={registeredUser.isAuthenticated}
+        showOnAuth="Logout"
+      />
     </header>
     <main>
       <div id="page-container">
@@ -85,29 +70,34 @@ const HomePage = () => (
         <section id="meals-ordered-container">
           <div id="meals-ordered" />
         </section>
-        <section id="paginate-container">
-          <div id="paginate">
-            <span className="page">1</span>
-            <span className="page">2</span>
-            <span className="page">3</span>
-            <span className="page">
-              <i className="fas fa-ellipsis-h" />
-            </span>
-            <span className="page">
-              <a href="#filter-text">
-                <i className="fas fa-chevron-up" />
-              </a>
-            </span>
-          </div>
-        </section>
+        <Paginate pagination={{}} />
       </div>
     </main>
-    <footer>
-      <div id="footer">
-        <p>Designed by Hussain A.I &copy; 2018</p>
-      </div>
-    </footer>
+    <Footer />
   </>
 );
 
 export default HomePage;
+
+/* <nav>
+  <div id="logo">
+    <a href="./loginPage.html">O-Meal</a>
+  </div>
+  <div id="large-width-nav">
+    <a id="active" href="./userProfile.html">Profile</a>
+    <a href="./availableOrders.html">Order</a>
+    <a href="./aboutPage.html">About</a>
+  </div>
+  <div id="nav-menu">
+    <a className="logout" href="./">Logout</a>
+    <span id="hamburger">
+      <i className="fas fa-bars fa-2x" />
+    </span>
+  </div>
+</nav>
+<div id="small-width-nav">
+  <a href="./userProfile.html">Profile</a>
+  <a href="./availableOrders.html">Order</a>
+  <a href="./aboutPage.html">About</a>
+  <a className="logout" href="./">Logout</a>
+</div> */
